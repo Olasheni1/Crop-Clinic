@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Crop Clinic — A Field Guide to Plant Disease</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: light;
+    --paper: #F0F8EC;
+    --paper-alt: #DFF0D6;
+    --paper-raised: #FFFFFF;
+    --ink: #16321E;
+    --ink-soft: #46664D;
+    --ink-faint: #6E8A72;
+    --line: #C3E2B8;
+    --line-soft: #D6EACB;
+    --primary: #2E8B45;
+    --primary-dark: #1F6B33;
+    --primary-contrast: #F4FBEF;
+    --primary-bg: #DCF0DA;
+    --fungal: #A66A0B;
+    --fungal-bg: #F5E6C8;
+    --bacterial: #1C7FA0;
+    --bacterial-bg: #D6EEF5;
+    --viral: #A03A87;
+    --viral-bg: #F3DEED;
+    --nematode: #C1541A;
+    --nematode-bg: #F6DDC9;
+    --insect: #4357A8;
+    --insect-bg: #E1E5F5;
+    --focus: #1F6B33;
+    --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --radius-s: 6px;
+    --radius-m: 10px;
+    --radius-l: 16px;
+    --shadow-card: 0 1px 0 rgba(22,50,30,0.06);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --paper: #0F1D13;
+      --paper-alt: #17281B;
+      --paper-raised: #1B2E20;
+      --ink: #E7F3E4;
+      --ink-soft: #A9C8AD;
+      --ink-faint: #79997E;
+      --line: #2C4432;
+      --line-soft: #24382A;
+      --primary: #57C173;
+      --primary-dark: #3E9A57;
+      --primary-contrast: #0C1F10;
+      --primary-bg: #1B3320;
+      --fungal: #E3AE52;
+      --fungal-bg: #33281A;
+      --bacterial: #5FC3E0;
+      --bacterial-bg: #163038;
+      --viral: #E092CE;
+      --viral-bg: #32202E;
+      --nematode: #F0916A;
+      --nematode-bg: #362216;
+      --insect: #96A8F0;
+      --insect-bg: #212A4A;
+      --focus: #8FE3A4;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --paper: #0F1D13;
+    --paper-alt: #17281B;
+    --paper-raised: #1B2E20;
+    --ink: #E7F3E4;
+    --ink-soft: #A9C8AD;
+    --ink-faint: #79997E;
+    --line: #2C4432;
+    --line-soft: #24382A;
+    --primary: #57C173;
+    --primary-dark: #3E9A57;
+    --primary-contrast: #0C1F10;
+    --primary-bg: #1B3320;
+    --fungal: #E3AE52;
+    --fungal-bg: #33281A;
+    --bacterial: #5FC3E0;
+    --bacterial-bg: #163038;
+    --viral: #E092CE;
+    --viral-bg: #32202E;
+    --nematode: #F0916A;
+    --nematode-bg: #362216;
+    --insect: #96A8F0;
+    --insect-bg: #212A4A;
+    --focus: #8FE3A4;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-padding-top: env(safe-area-inset-top, 0px); }
+  html,body{ height: 100%; }
+  body{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  img,svg{ display:block; max-width:100%; }
+  button{ font-family: inherit; }
+  a{ color: inherit; }
+
+  .icon{ width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; flex-shrink:0; }
+  .icon-sm{ width: 16px; height: 16px; }
+  .icon-lg{ width: 34px; height: 34px; }
+
+  :focus{ outline: none; }
+  :focus-visible{ outline: 2.5px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  /* ---------- Layout shell ---------- */
+  .shell{ min-height: 100%; display:flex; flex-direction:column; }
+
+  header.top{
+    position: sticky; top:0; z-index: 20;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 14%, var(--paper)) 0%, color-mix(in srgb, var(--paper) 92%, transparent) 65%);
+    backdrop-filter: saturate(150%) blur(6px);
+    border-bottom: 1px solid var(--line);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .top-inner{
+    max-width: 1080px; margin: 0 auto;
+    padding: 14px 20px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    flex-wrap: wrap;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand .mark{ width:30px;height:30px; color: var(--primary); }
+  .brand .word{ font-family: var(--font-display); font-weight:600; font-size: 1.28rem; letter-spacing: -0.01em; }
+  .brand .sub{ display:block; font-size: 0.72rem; color: var(--ink-faint); font-weight:500; margin-top:-2px; }
+
+  nav.tabs{ display:flex; gap:4px; flex-wrap:wrap; }
+  nav.tabs button{
+    border:1px solid transparent; background:transparent; color: var(--ink-soft);
+    font-size: 0.92rem; font-weight:500; padding:8px 13px; border-radius: 999px; cursor:pointer;
+  }
+  nav.tabs button:hover{ background: var(--paper-alt); color: var(--ink); }
+  nav.tabs button[aria-current="page"]{ background: var(--primary); color: var(--primary-contrast); }
+
+  .theme-toggle{
+    border:1px solid var(--line); background: var(--paper-raised); color: var(--ink-soft);
+    width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .theme-toggle:hover{ color: var(--ink); }
+
+  main{ flex:1; }
+  .wrap{ max-width: 1080px; margin: 0 auto; padding: 28px 20px 64px; }
+  .wrap-narrow{ max-width: 760px; }
+
+  .view-head{ margin-bottom: 26px; }
+  .view-head h1{
+    font-family: var(--font-display); font-weight:600; font-size: clamp(1.6rem, 3.2vw, 2.15rem);
+    margin: 0 0 8px; letter-spacing: -0.01em;
+  }
+  .view-head p{ margin:0; color: var(--ink-soft); font-size: 1rem; max-width: 60ch; }
+
+  /* ---------- Buttons / chips ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-weight:600; font-size:0.95rem; padding:11px 20px; border-radius: 999px;
+    border:1px solid var(--primary); background: var(--primary); color: var(--primary-contrast); cursor:pointer;
+  }
+  .btn:disabled{ opacity:0.4; cursor:not-allowed; }
+  .btn:hover:not(:disabled){ opacity:0.88; }
+  .btn.ghost{ background:transparent; color: var(--ink); border-color: var(--line); }
+  .btn.ghost:hover{ background: var(--paper-alt); }
+  .link-back{
+    display:inline-flex; align-items:center; gap:6px; background:none; border:none; cursor:pointer;
+    color: var(--ink-soft); font-size:0.92rem; font-weight:500; padding:6px 0; margin-bottom:18px;
+  }
+  .link-back:hover{ color: var(--ink); }
+
+  .badge{
+    display:inline-flex; align-items:center; gap:6px; font-size:0.78rem; font-weight:600;
+    padding: 4px 11px; border-radius: 999px; white-space:nowrap;
+  }
+  .badge.fungal{ background: var(--fungal-bg); color: var(--fungal); }
+  .badge.bacterial{ background: var(--bacterial-bg); color: var(--bacterial); }
+  .badge.viral{ background: var(--viral-bg); color: var(--viral); }
+  .badge.nematode{ background: var(--nematode-bg); color: var(--nematode); }
+  .badge.insect{ background: var(--insect-bg); color: var(--insect); }
+
+  .chip{
+    display:inline-flex; align-items:center; font-size:0.82rem; color: var(--ink-soft);
+    background: var(--paper-alt); border:1px solid var(--line-soft); padding:4px 10px; border-radius: 999px;
+  }
+  .chip-row{ display:flex; flex-wrap:wrap; gap:6px; }
+
+  /* ---------- Diagnose: step 1 ---------- */
+  .part-grid{ display:grid; grid-template-columns: repeat(auto-fill,minmax(150px,1fr)); gap:12px; }
+  .part-card{
+    display:flex; flex-direction:column; align-items:flex-start; gap:10px; text-align:left;
+    background: var(--paper-raised); border:1px solid var(--line); border-radius: var(--radius-l);
+    padding:18px; cursor:pointer; box-shadow: var(--shadow-card);
+  }
+  .part-card:hover{ border-color: var(--ink-soft); }
+  .part-card .icon{ color: var(--primary); width:28px; height:28px; }
+  .part-card b{ font-size:1.02rem; }
+  .part-card span{ font-size:0.82rem; color: var(--ink-faint); }
+
+  /* ---------- Diagnose: step 2 ---------- */
+  .step-bar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; flex-wrap:wrap; gap:10px; }
+  .step-tag{ font-size:0.85rem; color: var(--ink-faint); }
+  .change-link{ background:none; border:none; color: var(--primary-dark); font-weight:600; font-size:0.85rem; cursor:pointer; padding:2px; }
+  .change-link:hover{ text-decoration: underline; }
+
+  .symptom-grid{ display:grid; grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); gap:10px; margin-bottom:22px; }
+  .symptom-item{
+    display:flex; align-items:flex-start; gap:10px; background: var(--paper-raised);
+    border:1px solid var(--line-soft); border-radius: var(--radius-m); padding:12px 14px; cursor:pointer; font-size:0.9rem;
+  }
+  .symptom-item:hover{ border-color: var(--ink-soft); }
+  .symptom-item input{ margin-top:2px; width:16px; height:16px; accent-color: var(--primary); flex-shrink:0; }
+  .symptom-item.checked{ background: var(--primary-bg); border-color: var(--primary); }
+
+  .sticky-cta{ position: sticky; bottom: max(16px, env(safe-area-inset-bottom,0px)); display:flex; justify-content:flex-start; }
+
+  /* ---------- Results ---------- */
+  .result-list{ display:flex; flex-direction:column; gap:10px; }
+  .result-card{
+    display:flex; gap:14px; align-items:center; width:100%; text-align:left;
+    background: var(--paper-raised); border:1px solid var(--line); border-radius: var(--radius-l);
+    padding:16px 18px; cursor:pointer;
+  }
+  .result-card:hover{ border-color: var(--ink-soft); }
+  .result-rank{ font-family: var(--font-display); font-size:1.3rem; color: var(--ink-faint); width:28px; flex-shrink:0; }
+  .result-main{ flex:1; min-width:0; }
+  .result-main h3{ margin:0 0 4px; font-size:1.05rem; font-family: var(--font-display); font-weight:600; }
+  .result-main .sci{ font-style:italic; color: var(--ink-faint); font-size:0.85rem; }
+  .match-row{ display:flex; align-items:center; gap:8px; margin-top:8px; }
+  .dots{ display:flex; gap:4px; }
+  .dot{ width:8px; height:8px; border-radius:50%; background: var(--line); }
+  .dot.on{ background: var(--primary); }
+  .match-text{ font-size:0.8rem; color: var(--ink-faint); }
+
+  .empty-state{
+    text-align:left; padding:40px 24px; border:1px dashed var(--line); border-radius: var(--radius-l);
+    color: var(--ink-soft);
+  }
+  .empty-state .icon-lg{ color: var(--ink-faint); margin-bottom:14px; }
+  .empty-state h3{ font-family:var(--font-display); margin:0 0 6px; color: var(--ink); font-size:1.15rem; }
+  .empty-state p{ margin:0 0 16px; max-width: 46ch; }
+
+  /* ---------- Browse ---------- */
+  .filter-bar{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:20px; align-items:center; }
+  .search-input{
+    flex: 1 1 220px; padding:10px 14px; border-radius:999px; border:1px solid var(--line);
+    background: var(--paper-raised); color: var(--ink); font-size:0.92rem;
+  }
+  .search-input::placeholder{ color: var(--ink-faint); }
+  select.filter-select{
+    padding:9px 12px; border-radius:999px; border:1px solid var(--line); background: var(--paper-raised);
+    color: var(--ink); font-size:0.88rem; cursor:pointer;
+  }
+  .filter-dropdown{ position:relative; }
+  .filter-toggle{
+    display:inline-flex; align-items:center; gap:7px;
+    padding:9px 14px; border-radius:999px; border:1px solid var(--line); background: var(--paper-raised);
+    color: var(--ink); font-size:0.88rem; font-weight:500; cursor:pointer;
+  }
+  .filter-toggle:hover{ border-color: var(--ink-soft); }
+  .filter-toggle .icon{ width:13px; height:13px; color: var(--ink-faint); }
+  .filter-toggle.active{ border-color: var(--primary); background: var(--primary-bg); color: var(--primary-dark); }
+  .filter-toggle.active .icon{ color: var(--primary-dark); }
+  .filter-panel{
+    position:absolute; top:calc(100% + 8px); left:0; z-index:30; min-width:210px; max-height:280px; overflow-y:auto;
+    background: var(--paper-raised); border:1px solid var(--line); border-radius: var(--radius-m);
+    padding:10px; display:flex; flex-direction:column; gap:1px; box-shadow: 0 10px 28px rgba(20,30,15,0.16);
+  }
+  .filter-option{ display:flex; align-items:center; gap:9px; padding:7px 8px; border-radius:6px; cursor:pointer; font-size:0.88rem; }
+  .filter-option:hover{ background: var(--paper-alt); }
+  .filter-option input{ accent-color: var(--primary); width:15px; height:15px; flex-shrink:0; }
+  .filter-clear{
+    margin-top:6px; padding-top:8px; border-top:1px solid var(--line-soft); text-align:left;
+    background:none; border-left:none; border-right:none; border-bottom:none; color: var(--ink-faint);
+    font-size:0.78rem; text-decoration:underline; cursor:pointer;
+  }
+  .active-chips{ display:flex; flex-wrap:wrap; gap:8px; margin: 2px 0 18px; align-items:center; }
+  .filter-chip{
+    display:inline-flex; align-items:center; gap:6px; background: var(--primary-bg); color: var(--primary-dark);
+    border:1px solid var(--primary); padding:5px 11px; border-radius:999px; font-size:0.8rem; font-weight:600; cursor:pointer;
+  }
+  .filter-chip:hover{ opacity:0.75; }
+  .filter-clear-all{ background:none; border:none; color: var(--ink-faint); font-size:0.8rem; text-decoration:underline; cursor:pointer; padding:5px 2px; }
+  .result-count{ font-size:0.85rem; color: var(--ink-faint); margin-bottom:14px; }
+
+  .card-grid{ display:grid; grid-template-columns: repeat(auto-fill,minmax(255px,1fr)); gap:14px; }
+  .disease-card{
+    text-align:left; background: var(--paper-raised); border:1px solid var(--line);
+    border-radius: var(--radius-l); padding:18px; cursor:pointer; display:flex; flex-direction:column; gap:10px;
+    box-shadow: var(--shadow-card);
+  }
+  .disease-card:hover{ border-color: var(--ink-soft); }
+  .disease-card .top-row{ display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+  .disease-card h3{ margin:0; font-family: var(--font-display); font-size:1.08rem; font-weight:600; line-height:1.25; }
+  .disease-card .sci{ font-style:italic; color: var(--ink-faint); font-size:0.82rem; display:block; margin-top:2px; }
+  .disease-card .teaser{ font-size:0.86rem; color: var(--ink-soft); margin:0; line-height:1.45; }
+  .disease-card .parts-row{ display:flex; gap:8px; color: var(--ink-faint); }
+  .disease-card .parts-row .icon{ width:18px; height:18px; }
+
+  /* ---------- Illustration tiles ---------- */
+  .illus-tile{
+    position:relative; display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .illus-tile.fungal{ background: radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--fungal-bg) 70%, white 0%), var(--fungal-bg)); }
+  .illus-tile.bacterial{ background: radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--bacterial-bg) 70%, white 0%), var(--bacterial-bg)); }
+  .illus-tile.viral{ background: radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--viral-bg) 70%, white 0%), var(--viral-bg)); }
+  .illus-tile.nematode{ background: radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--nematode-bg) 70%, white 0%), var(--nematode-bg)); }
+  .illus-tile.insect{ background: radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--insect-bg) 70%, white 0%), var(--insect-bg)); }
+  .illus-tile svg{ display:block; }
+  .illus-badge{
+    position:absolute; top:9px; right:9px; width:26px; height:26px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 1px 3px rgba(0,0,0,0.18);
+  }
+  .illus-badge .icon{ width:14px; height:14px; stroke-width:3; }
+  .illus-tile.fungal .illus-badge{ background: var(--fungal); }
+  .illus-tile.bacterial .illus-badge{ background: var(--bacterial); }
+  .illus-tile.viral .illus-badge{ background: var(--viral); }
+  .illus-tile.nematode .illus-badge{ background: var(--nematode); }
+  .illus-tile.insect .illus-badge{ background: var(--insect); }
+
+  .card-illus{ height:126px; margin:-18px -18px 2px -18px; border-radius: var(--radius-l) var(--radius-l) 0 0; }
+  .result-illus{ width:52px; height:52px; border-radius: var(--radius-m); flex-shrink:0; }
+  .detail-illus{ width:100%; max-width:230px; height:184px; border-radius: var(--radius-l); margin-bottom:18px; }
+
+  /* ---------- Detail ---------- */
+  .detail-head{ margin-bottom: 22px; }
+  .detail-head .top-row{ display:flex; justify-content:space-between; align-items:flex-start; gap:14px; flex-wrap:wrap; margin-bottom:14px; }
+  .detail-head h1{ font-family: var(--font-display); font-size: clamp(1.7rem,3.6vw,2.3rem); font-weight:600; margin:0 0 4px; letter-spacing:-0.01em; }
+  .detail-head .sci{ font-style:italic; color: var(--ink-faint); font-size:1rem; }
+  .parts-legend{ display:flex; gap:16px; margin-top:16px; flex-wrap:wrap; }
+  .parts-legend .item{ display:flex; align-items:center; gap:6px; font-size:0.82rem; color: var(--ink-soft); }
+  .parts-legend .icon{ width:18px; height:18px; color: var(--ink-faint); }
+
+  .save-btn{
+    display:inline-flex; align-items:center; gap:7px; border:1px solid var(--line); background: var(--paper-raised);
+    color: var(--ink-soft); padding:9px 16px; border-radius:999px; cursor:pointer; font-size:0.88rem; font-weight:600;
+  }
+  .save-btn:hover{ border-color: var(--ink-soft); color: var(--ink); }
+  .save-btn.active{ background: var(--fungal-bg); color: var(--fungal); border-color: var(--fungal); }
+
+  section.detail-section{ margin-bottom: 28px; }
+  section.detail-section h2{
+    font-family: var(--font-display); font-size:1.15rem; font-weight:600; margin:0 0 10px;
+  }
+  section.detail-section p{ margin:0; color: var(--ink); line-height:1.65; max-width: 68ch; }
+
+  .mgmt-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:14px; }
+  .mgmt-card{ background: var(--paper-raised); border:1px solid var(--line-soft); border-radius: var(--radius-m); padding:16px 18px; }
+  .mgmt-card h3{ display:flex; align-items:center; gap:8px; margin:0 0 10px; font-size:0.95rem; font-weight:600; }
+  .mgmt-card h3 .icon{ width:18px;height:18px; color: var(--ink-faint); }
+  .mgmt-card ul{ margin:0; padding-left:18px; display:flex; flex-direction:column; gap:7px; }
+  .mgmt-card li{ font-size:0.89rem; color: var(--ink-soft); line-height:1.5; }
+
+  .note{ font-size:0.83rem; color: var(--ink-faint); margin-top:18px; padding-top:16px; border-top:1px dashed var(--line); max-width: 68ch; }
+
+  /* ---------- Saved / About ---------- */
+  .about-copy p{ margin:0 0 16px; color: var(--ink); line-height:1.7; max-width: 62ch; }
+  .about-copy h2{ font-family: var(--font-display); font-size:1.2rem; margin: 26px 0 10px; }
+  .legend-row{ display:flex; flex-wrap:wrap; gap:10px; margin: 10px 0 20px; }
+  .creator-card{
+    display:flex; align-items:center; gap:18px; margin-top:10px; padding:18px 20px;
+    background: var(--paper-raised); border:1px solid var(--line); border-radius: var(--radius-l);
+    max-width: 62ch; box-shadow: var(--shadow-card);
+  }
+  .creator-photo{
+    width:72px; height:72px; border-radius:50%; object-fit:cover; flex-shrink:0;
+    border:3px solid var(--primary-bg);
+  }
+  .creator-card h3{ margin:0 0 4px; font-family: var(--font-display); font-size:1.03rem; font-weight:600; }
+  .creator-card p{ margin:0; font-size:0.86rem; color: var(--ink-soft); line-height:1.5; }
+  @media (max-width: 480px){
+    .creator-card{ flex-direction:column; align-items:flex-start; text-align:left; }
+  }
+  .profile{ margin-top:36px; padding-top:28px; border-top:1px solid var(--line); max-width:760px; }
+  .profile-head{ display:flex; gap:20px; align-items:center; margin-bottom:18px; }
+  .profile-photo{ width:108px; height:108px; border-radius:50%; object-fit:cover; flex-shrink:0; border:3px solid var(--primary); }
+  .profile-name{ font-family: var(--font-display); font-size: clamp(1.45rem,3vw,1.85rem); font-weight:600; margin:0 0 4px; letter-spacing:-0.01em; }
+  .profile-role{ margin:0 0 6px; color: var(--ink-soft); font-size:0.95rem; line-height:1.5; }
+  .profile-mail{ color: var(--primary-dark); font-weight:600; font-size:0.9rem; word-break:break-all; }
+  .profile-bio{ margin:0 0 6px; line-height:1.7; max-width:66ch; }
+  .profile h3{ font-family: var(--font-display); font-size:1.12rem; font-weight:600; margin:30px 0 12px; }
+  .tl{ display:flex; flex-direction:column; gap:18px; }
+  .tl-item{ border-left:3px solid var(--primary); padding-left:14px; }
+  .tl-item b{ display:block; font-size:0.98rem; line-height:1.4; }
+  .tl-meta{ display:block; font-size:0.84rem; color: var(--ink-faint); margin:2px 0 6px; }
+  .tl-item ul{ margin:0; padding-left:18px; display:flex; flex-direction:column; gap:5px; }
+  .tl-item li{ font-size:0.9rem; color: var(--ink-soft); line-height:1.55; }
+  .skill-label{ font-size:0.84rem; font-weight:600; color: var(--ink-soft); margin:14px 0 8px; }
+  @media (max-width: 480px){
+    .profile-head{ flex-direction:column; align-items:flex-start; }
+  }
+
+  footer.app-footer{ border-top:1px solid var(--line); padding: 20px; text-align:center; }
+  footer.app-footer p{ margin:0; font-size:0.78rem; color: var(--ink-faint); }
+
+  @media (max-width: 640px){
+    .top-inner{ padding:12px 16px; }
+    .wrap{ padding:22px 16px 56px; }
+    nav.tabs button{ padding:7px 11px; font-size:0.86rem; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <div class="top-inner">
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 48 48"><path d="M10 38C10 20 22 8 40 8C40 26 28 38 10 38Z"/><path d="M10 38C18 30 26 22 38 10"/></svg>
+        <div>
+          <span class="word">Crop Clinic</span>
+          <span class="sub">Field guide to plant disease &amp; pests</span>
+        </div>
+      </div>
+      <nav class="tabs" id="navTabs"></nav>
+      <button class="theme-toggle" id="themeToggle" title="Toggle light / dark" aria-label="Toggle color theme">
+        <svg class="icon icon-sm" id="themeIcon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main><div class="wrap" id="app"></div></main>
+
+  <footer class="app-footer">
+    <p>Crop Clinic is an educational field reference — not a substitute for lab diagnosis. Confirm with your local extension service before treating.</p>
+  </footer>
+</div>
+
+<script>
+/* ============================= DATA ============================= */
+
+const PART_META = {
+  leaf:  { label: 'Leaf',        desc: 'Spots, coatings, curling',   icon: 'leaf' },
+  stem:  { label: 'Stem',        desc: 'Cankers, rot, wilting',      icon: 'stem' },
+  root:  { label: 'Root',        desc: 'Galls, rot, cysts',          icon: 'root' },
+  fruit: { label: 'Fruit',       desc: 'Lesions, rot, mold',         icon: 'fruit' },
+  whole: { label: 'Whole plant', desc: 'General decline, collapse',  icon: 'whole' },
+};
+
+const TYPE_META = {
+  fungal:    { label: 'Fungal',    icon: 'fungal' },
+  bacterial: { label: 'Bacterial', icon: 'bacterial' },
+  viral:     { label: 'Viral',     icon: 'viral' },
+  nematode:  { label: 'Nematode',  icon: 'nematode' },
+  insect:    { label: 'Insect',    icon: 'bug' },
+};
+
+const TAGS = {
+  L1:`Yellowing between leaf veins`, L2:`White or gray powdery coating on the surface`,
+  L3:`Fuzzy gray-purple mold on the underside`, L4:`Angular spots bounded by leaf veins`,
+  L5:`Brown spots with concentric target-like rings`, L6:`Water-soaked spots turning dark and greasy`,
+  L7:`Yellow halo ringing spots`, L8:`Orange or rust-colored powdery pustules`,
+  L9:`Mottled light and dark green mosaic pattern`, L10:`Curling, puckering, or distortion`,
+  L11:`Margins browning or scorched`, L13:`Small holes where dead spots have fallen out`,
+  L15:`Rapid blackening and collapse`, L16:`Small spots with a gray center and dark margin`,
+  L17:`V-shaped yellowing from the leaf tip inward`, L18:`Dark green streaks along the veins`,
+  L19:`Excessive, bushy shoot or leaf proliferation`,
+  L20:`Ragged holes chewed through the leaf`, L21:`Leaf tissue skeletonized between veins`,
+  L22:`Silvery stippling or scarring on the surface`, L23:`Sticky honeydew with black sooty mold`,
+  L24:`Winding pale tunnels (mines) through the leaf`, L25:`Fine webbing across the leaf surface`,
+  S1:`Dark, sunken cankers on the stem`, S2:`Soft, mushy, water-soaked rot`,
+  S4:`White cottony growth at the base`, S5:`Brown discoloration inside the stem when cut`,
+  S6:`A girdling lesion right at the soil line`, S7:`Abnormal swelling or a gall on the stem`,
+  S9:`Seedling collapses at the soil line`, S10:`Swollen, soft, distorted stem or bulb tissue`,
+  S11:`Stem girdled or bored with visible entry holes`, S12:`Frass (insect droppings) at the base or in holes`,
+  R1:`Roots brown, mushy, and rotted`, R2:`Small knots or galls on the roots`,
+  R3:`Swollen, club-shaped, distorted roots`, R4:`Root system sparse or stunted`,
+  R5:`Roots have a foul, rotten odor`, R6:`Tiny round cysts visible on the root surface`,
+  R7:`Dark, sunken lesions on the root surface`,
+  R8:`Maggots or grubs feeding on the root surface`, R9:`Tunnels bored through the root or bulb`,
+  F1:`Sunken lesions with concentric rings`, F2:`Water-soaked spots expanding rapidly`,
+  F3:`Soft, watery rot with a foul smell`, F4:`Visible mold growth on the surface`,
+  F6:`Discolored, ring-like pattern in the flesh or skin`, F7:`Small, raised, scab-like spots`,
+  F9:`Small spots with a pale halo and dark center`,
+  F10:`Boring holes in the fruit with visible frass`, F11:`Puncture marks or stippled scarring on the skin`,
+  W1:`Sudden wilting of the entire plant`, W2:`Overall stunted growth`,
+  W3:`Wilting starting on one side or branch`, W4:`Uniform yellowing of the whole plant`,
+  W5:`Plant collapses or dies suddenly`,
+  W6:`Large areas of foliage eaten away rapidly`, W7:`Insects or larvae visibly present on the plant`,
+};
+
+function tagsForPart(part){
+  const letter = part === 'leaf' ? 'L' : part === 'stem' ? 'S' : part === 'root' ? 'R' : part === 'fruit' ? 'F' : 'W';
+  const set = new Set();
+  ENTRIES.forEach(d=>{
+    if(d.parts.includes(part)){
+      d.tags.forEach(t=>{ if(t[0]===letter || t[0]==='W') set.add(t); });
+    }
+  });
+  return Array.from(set).sort();
+}
+
+const DISEASES = [
+{ id:'powdery-mildew', name:`Powdery Mildew`, sci:`Erysiphe, Podosphaera & Golovinomyces spp.`, type:'fungal',
+  parts:['leaf','stem'], crops:['Cucumber','Squash','Melon','Pea','Bean','Tomato','Grape'],
+  tags:['L2','L10','W2'],
+  symptoms:`White to grayish powdery fungal growth spreads across upper leaf surfaces and stems. Leaves may yellow, curl, and drop as the coating thickens, and severe infections stunt growth and reduce fruit quality.`,
+  conditions:`Favors warm days with cool, humid nights. Unlike most fungal diseases, spores can germinate without free water on the leaf, so it thrives even in dry weather if humidity is moderate. Dense, shaded plantings make it worse.`,
+  mgmt:{ cultural:[`Space and prune plants for good air circulation`,`Avoid excess nitrogen fertilizer`,`Remove and destroy infected debris after harvest`,`Plant in full sun where possible`],
+    biological:[`Apply Bacillus subtilis or B. amyloliquefaciens biofungicides`,`Spray potassium bicarbonate solutions at first sign of disease`],
+    plantExtract:[`Spray neem oil or neem seed extract, which suppresses spore germination`,`Try a diluted garlic extract spray at the first sign of white coating`],
+    chemical:[`Apply sulfur sprays early in the season`,`Use DMI fungicides (e.g. myclobutanil, tebuconazole) where registered`,`Try neem oil for light infections`],
+    resistant:[`Choose powdery-mildew-resistant cucurbit, pea, and cereal varieties`] } },
+
+{ id:'downy-mildew', name:`Downy Mildew`, sci:`Peronospora, Pseudoperonospora & Plasmopara spp.`, type:'fungal',
+  parts:['leaf'], crops:['Cucumber','Melon','Onion','Grape','Basil','Lettuce'],
+  tags:['L4','L1','L3'],
+  symptoms:`Angular yellow spots appear on the upper leaf surface, bounded by the veins, with a corresponding gray-to-purple fuzzy mold on the underside in humid conditions. Leaves eventually brown and die.`,
+  conditions:`Needs free moisture or high humidity plus cool-to-moderate temperatures. Spreads rapidly on wind-blown spores during extended wet weather.`,
+  mgmt:{ cultural:[`Avoid overhead irrigation; water early in the day`,`Increase plant spacing for airflow`,`Remove infected leaves promptly`,`Rotate crops each season`],
+    biological:[`Use copper-based biofungicides preventatively`,`Apply Bacillus-based foliar products`],
+    plantExtract:[`Apply neem extract as a preventive foliar spray`,`Try horsetail (Equisetum) tea, a traditional silica-rich spray used against downy mildews`],
+    chemical:[`Apply protectant fungicides such as chlorothalonil or copper`,`Use targeted oomycete fungicides (e.g. mandipropamid) in a resistance-management rotation`],
+    resistant:[`Plant downy-mildew-resistant cucumber and lettuce varieties`,`Check for updated resistance ratings as new pathogen strains emerge`] } },
+
+{ id:'rust', name:`Rust`, sci:`Puccinia & Uromyces spp.`, type:'fungal',
+  parts:['leaf','stem'], crops:['Wheat','Maize','Bean','Onion','Coffee','Soybean'],
+  tags:['L8','W2'],
+  symptoms:`Small orange, yellow, or reddish-brown powdery pustules erupt on leaf undersides and stems. Heavy infection causes leaves to yellow, dry out, and drop early.`,
+  conditions:`Favored by moderate temperatures, high humidity, and prolonged leaf wetness. Spores travel long distances on the wind.`,
+  mgmt:{ cultural:[`Remove volunteer plants and alternate hosts`,`Avoid dense planting`,`Rotate crops each season`,`Destroy crop residue after harvest`],
+    biological:[`Apply Bacillus-based foliar sprays for partial suppression`],
+    plantExtract:[`Spray neem oil at first sign of pustules`,`Try a garlic-and-chili extract spray to slow pustule spread`],
+    chemical:[`Apply triazole or strobilurin fungicides at first pustule detection`,`Rotate fungicide classes to manage resistance`],
+    resistant:[`Plant rust-resistant cereal and legume varieties suited to your region`] } },
+
+{ id:'septoria-leaf-spot', name:`Septoria Leaf Spot`, sci:`Septoria lycopersici / S. tritici`, type:'fungal',
+  parts:['leaf'], crops:['Tomato','Wheat','Celery'],
+  tags:['L16','L13'],
+  symptoms:`Numerous small, circular spots with dark brown margins and pale gray centers, dotted with tiny black fruiting bodies, start on lower leaves and progress upward, causing yellowing and defoliation.`,
+  conditions:`Favored by warm, wet, humid weather. Splashing rain or irrigation spreads spores from soil and old plant debris.`,
+  mgmt:{ cultural:[`Stake and mulch plants to reduce soil splash`,`Remove infected lower leaves`,`Rotate away from tomato and related hosts for 2 years`,`Avoid overhead watering`],
+    biological:[`Apply copper or Bacillus-based biofungicides preventatively`],
+    plantExtract:[`Apply neem extract as a preventive spray`,`Try a garlic clove extract spray on lower leaves`],
+    chemical:[`Apply chlorothalonil or copper-based fungicides every 7–10 days during wet weather`],
+    resistant:[`Few fully resistant tomato varieties exist; prioritize sanitation and tolerant lines where available`] } },
+
+{ id:'early-blight', name:`Early Blight`, sci:`Alternaria solani`, type:'fungal',
+  parts:['leaf','stem','fruit'], crops:['Tomato','Potato'],
+  tags:['L5','L13','S1','F1'],
+  symptoms:`Dark brown spots with concentric target-like rings appear on older leaves first, often circled by a yellow halo. Stem lesions and leathery, sunken spots near the fruit stem end can also develop.`,
+  conditions:`Favored by warm temperatures, alternating wet and dry periods, and plant stress such as low fertility or drought.`,
+  mgmt:{ cultural:[`Rotate crops for 2–3 years`,`Stake and mulch to reduce soil splash`,`Remove infected debris promptly`,`Maintain balanced soil fertility to reduce plant stress`],
+    biological:[`Apply Bacillus subtilis-based biofungicides preventatively`],
+    plantExtract:[`Spray neem oil on a preventive schedule`,`Try a garlic-and-ginger extract spray during humid weather`],
+    chemical:[`Apply chlorothalonil, mancozeb, or azoxystrobin on a preventive schedule`],
+    resistant:[`Choose early-blight-tolerant tomato and potato varieties`] } },
+
+{ id:'late-blight', name:`Late Blight`, sci:`Phytophthora infestans`, type:'fungal',
+  parts:['leaf','stem','fruit'], crops:['Tomato','Potato'],
+  tags:['L6','L15','S1','F2','W5'],
+  symptoms:`Water-soaked, pale-to-dark green lesions on leaves enlarge rapidly and turn brown to black, often with white fungal growth on the underside in humid weather. Dark, greasy stem lesions and firm brown blotches on fruit or tubers follow, and whole plants can collapse within days.`,
+  conditions:`Favored by cool, moist weather (roughly 15–21°C) with high humidity or leaf wetness. Spreads explosively on wind-blown spores once conditions turn favorable.`,
+  mgmt:{ cultural:[`Destroy volunteer potatoes and infected debris immediately`,`Avoid overhead irrigation`,`Improve drainage and airflow`,`Never compost infected plant material`],
+    biological:[`Apply copper-based biofungicides preventatively in organic programs`],
+    plantExtract:[`Try horsetail (Equisetum) tea spray, a traditional remedy used preventively against blights`,`Apply a garlic extract spray before wet weather sets in`],
+    chemical:[`Apply protectant fungicides (chlorothalonil, mancozeb) before infection appears`,`Use systemic oomycete fungicides during active outbreaks, rotating modes of action`],
+    resistant:[`Plant late-blight-resistant potato and tomato varieties where available`] } },
+
+{ id:'anthracnose', name:`Anthracnose`, sci:`Colletotrichum spp.`, type:'fungal',
+  parts:['leaf','stem','fruit'], crops:['Bean','Pepper','Cucumber','Mango','Squash'],
+  tags:['F1','S1','L13'],
+  symptoms:`Sunken, dark, water-soaked lesions form on fruit, sometimes showing concentric rings of pink or orange spores in humid weather. Dark cankers appear on stems and irregular dead spots develop on leaves.`,
+  conditions:`Favored by warm, wet, humid conditions. Spread by splashing rain, contaminated seed, and infected debris.`,
+  mgmt:{ cultural:[`Use certified disease-free seed`,`Rotate crops each season`,`Avoid working in fields while foliage is wet`,`Remove and destroy infected plant material`],
+    biological:[`Apply Bacillus- or Trichoderma-based biofungicides as seed or foliar treatments`],
+    plantExtract:[`Apply neem seed extract to fruit and foliage`,`Try a clove oil spray, which has antifungal properties`],
+    chemical:[`Apply copper-based or strobilurin fungicides preventatively, especially before rain`],
+    resistant:[`Plant anthracnose-resistant bean and pepper varieties`] } },
+
+{ id:'gray-mold', name:`Gray Mold`, sci:`Botrytis cinerea`, type:'fungal',
+  parts:['stem','fruit'], crops:['Strawberry','Grape','Tomato','Lettuce','Bean'],
+  tags:['F4','S2'],
+  symptoms:`Fuzzy gray-brown fungal growth develops on flowers, fruit, and damaged or aging tissue. Infected fruit turns soft and mold-covered, and stems can develop water-soaked, girdling lesions.`,
+  conditions:`Favored by cool, humid, poorly ventilated conditions and any injured or overripe tissue. Spreads readily through airborne spores.`,
+  mgmt:{ cultural:[`Improve airflow and plant spacing`,`Remove spent flowers and dying leaves promptly`,`Avoid overhead watering`,`Harvest promptly and avoid injuring plants`],
+    biological:[`Apply Trichoderma- or Bacillus-based biofungicides preventatively`],
+    plantExtract:[`Spray a garlic extract around flowers and ripening fruit`,`Apply neem oil to reduce spore germination`],
+    chemical:[`Apply fungicides such as fenhexamid where registered, rotating modes of action`],
+    resistant:[`Few fully resistant varieties exist; sanitation is the primary defense`] } },
+
+{ id:'fusarium-wilt', name:`Fusarium Wilt`, sci:`Fusarium oxysporum f. spp.`, type:'fungal',
+  parts:['stem','root','whole'], crops:['Tomato','Banana','Watermelon','Cotton','Pea'],
+  tags:['S5','W3','W2'],
+  symptoms:`Leaves yellow and wilt, often starting on one side of the plant or on the lower leaves. Cutting the stem lengthwise reveals browned vascular tissue, and plants stay stunted before eventually dying.`,
+  conditions:`A soil-borne fungus that persists for years. Favored by warm soil temperatures and spread by infected soil, water, tools, and transplants.`,
+  mgmt:{ cultural:[`Rotate with non-host crops for several years`,`Use disease-free soil and transplants`,`Sanitize tools and equipment between plants`,`Improve soil drainage`],
+    biological:[`Apply Trichoderma-based soil inoculants to suppress the pathogen`],
+    plantExtract:[`Work neem seed cake into the soil before planting`,`Try a garlic bulb extract soil drench around the root zone`],
+    chemical:[`No effective curative chemical treatment is available`,`Soil fumigation is sometimes used pre-plant in high-value crops`],
+    resistant:[`Plant Fusarium-resistant varieties (often labeled "F") — the most effective control`] } },
+
+{ id:'verticillium-wilt', name:`Verticillium Wilt`, sci:`Verticillium dahliae / V. albo-atrum`, type:'fungal',
+  parts:['leaf','stem','whole'], crops:['Potato','Tomato','Pepper','Eggplant','Strawberry'],
+  tags:['S5','L17','W2'],
+  symptoms:`Yellowing often forms V-shaped lesions pointing inward from leaf margins, progressing to wilting and browning of lower leaves. The stem's vascular tissue shows light brown streaking inside, and plants stay stunted with reduced yield.`,
+  conditions:`Cool-to-moderate soil temperatures favor development. The fungus survives many years in soil as resting structures called microsclerotia.`,
+  mgmt:{ cultural:[`Rotate with non-host cereal or grass crops for 4+ years`,`Avoid planting into known infested fields`,`Manage soil moisture and nutrition to reduce plant stress`],
+    biological:[`Apply Trichoderma-based soil treatments for partial suppression`],
+    plantExtract:[`Work neem seed cake into the soil as a pre-plant amendment`,`Incorporate mustard seed meal, a natural biofumigant, before planting`],
+    chemical:[`No effective curative fungicide exists`,`Pre-plant soil fumigation is sometimes used in high-value operations`],
+    resistant:[`Plant Verticillium-resistant varieties (often labeled "V")`] } },
+
+{ id:'southern-blight', name:`Southern Blight`, sci:`Sclerotium rolfsii (Athelia rolfsii)`, type:'fungal',
+  parts:['stem','root'], crops:['Tomato','Pepper','Peanut','Carrot'],
+  tags:['S6','S4','W5'],
+  symptoms:`A girdling brown lesion develops at the stem right at the soil line, often covered by white, fan-like fungal threads and small round tan-to-brown sclerotia resembling mustard seeds. Plants wilt suddenly and collapse.`,
+  conditions:`Favored by hot, humid weather and acidic, sandy soils with plant debris left on the surface.`,
+  mgmt:{ cultural:[`Deep-plow to bury sclerotia`,`Remove and destroy crop debris`,`Keep mulch away from stem bases`,`Rotate with grass crops and improve drainage`],
+    biological:[`Apply Trichoderma-based soil treatments to suppress sclerotia`],
+    plantExtract:[`Incorporate neem seed cake into the soil at the base of plants`,`Try a garlic extract soil drench around the stem base`],
+    chemical:[`Apply PCNB or other labeled soil fungicides at the base of plants in high-risk fields`],
+    resistant:[`Few strongly resistant vegetable varieties exist; rely on sanitation and rotation`] } },
+
+{ id:'damping-off', name:`Damping-off`, sci:`Pythium spp. / Rhizoctonia solani`, type:'fungal',
+  parts:['stem','root'], crops:['Tomato','Pepper','Bean','Cucumber','Maize'],
+  tags:['S9','R1','R4'],
+  symptoms:`Seeds fail to emerge, or seedlings collapse right at the soil line shortly after emergence. Roots appear brown, water-soaked, and mushy, and surviving plants stay stunted with a poor root system.`,
+  conditions:`Favored by cool, wet, poorly drained soil and overly dense seeding or overwatering.`,
+  mgmt:{ cultural:[`Improve drainage and avoid overwatering`,`Use sterile, well-draining seed-starting mix`,`Avoid overcrowding seedlings`,`Let the soil surface dry slightly between waterings`],
+    biological:[`Apply Trichoderma- or Bacillus-based seed treatments and soil drenches`],
+    plantExtract:[`Treat seed with a diluted neem extract before sowing`,`Try a chamomile tea drench on seedling trays, a traditional damping-off remedy`],
+    chemical:[`Use fungicide seed treatments (e.g. mefenoxam for Pythium) where risk is high`],
+    resistant:[`Not typically variety-specific; rely on cultural and biological prevention`] } },
+
+{ id:'clubroot', name:`Clubroot`, sci:`Plasmodiophora brassicae`, type:'fungal',
+  parts:['root','whole'], crops:['Cabbage','Broccoli','Cauliflower','Mustard'],
+  tags:['R3','W2','W4'],
+  symptoms:`Roots become swollen, distorted, and club-shaped, badly impairing water and nutrient uptake. Plants stay stunted, wilt readily in warm weather, and leaves yellow.`,
+  conditions:`Favored by acidic, wet soils. The pathogen persists as resting spores in soil for over a decade.`,
+  mgmt:{ cultural:[`Raise soil pH to 7.2 or higher with lime`,`Improve drainage`,`Rotate away from brassicas for 4–7 years`,`Sanitize tools and boots between fields`],
+    biological:[`Limited options; some biofungicide soil drenches offer partial suppression`],
+    plantExtract:[`Incorporate mustard or other brassica biofumigant residues before planting`,`Work neem seed cake into the soil to support soil health`],
+    chemical:[`No reliable curative treatment exists`,`Soil fumigation is occasionally used in severe, high-value cases`],
+    resistant:[`Plant clubroot-resistant brassica varieties, increasingly available and highly recommended`] } },
+
+{ id:'white-mold', name:`White Mold`, sci:`Sclerotinia sclerotiorum`, type:'fungal',
+  parts:['stem','whole'], crops:['Bean','Soybean','Canola','Lettuce','Cucumber'],
+  tags:['S2','S4','W1'],
+  symptoms:`Water-soaked lesions on stems, often at branch junctions, develop into white, cottony fungal growth containing hard black sclerotia. Affected stems bleach and weaken, and the plant wilts and dies above the lesion.`,
+  conditions:`Favored by cool, moist conditions, dense canopies, and extended leaf wetness during flowering.`,
+  mgmt:{ cultural:[`Widen plant spacing for airflow`,`Rotate with non-host cereal crops`,`Avoid excess nitrogen fertilization`,`Manage host weeds`],
+    biological:[`Apply Coniothyrium minitans-based products to soil to degrade sclerotia`],
+    plantExtract:[`Spray a garlic extract around flowering plants`,`Apply neem oil as a preventive spray`],
+    chemical:[`Apply fungicides (e.g. boscalid, thiophanate-methyl) at flowering in high-risk fields`],
+    resistant:[`Some bean and soybean lines show partial resistance; full resistance is uncommon`] } },
+
+{ id:'bacterial-leaf-spot', name:`Bacterial Leaf Spot`, sci:`Xanthomonas spp. / Pseudomonas syringae pv.`, type:'bacterial',
+  parts:['leaf','fruit'], crops:['Pepper','Tomato','Lettuce'],
+  tags:['L6','L7','F7'],
+  symptoms:`Small, dark, water-soaked spots appear on leaves, often ringed with a yellow halo. Spots merge and cause leaves to yellow and drop, while fruit can develop raised, scabby, brown spots.`,
+  conditions:`Favored by warm, wet, humid weather. Spread by splashing water, contaminated seed, and handling wet plants.`,
+  mgmt:{ cultural:[`Use certified disease-free seed and transplants`,`Avoid overhead irrigation`,`Avoid working among wet plants`,`Rotate crops for 2–3 years`],
+    biological:[`Apply Bacillus-based biopesticides preventatively`],
+    plantExtract:[`Spray a garlic extract at first sign of spotting`,`Apply neem oil as a preventive foliar spray`],
+    chemical:[`Apply copper-based sprays combined with mancozeb for resistance management`],
+    resistant:[`Plant bacterial-spot-resistant pepper and tomato varieties in high-pressure areas`] } },
+
+{ id:'bacterial-blight', name:`Bacterial Blight`, sci:`Xanthomonas axonopodis pv. / X. oryzae`, type:'bacterial',
+  parts:['leaf'], crops:['Bean','Rice','Cotton','Pomegranate'],
+  tags:['L4','L7','L15'],
+  symptoms:`Water-soaked, angular leaf spots turn brown and are often ringed with a yellow halo. Spots merge into large dead, blighted patches; in rice, lesions appear as yellow-to-white water-soaked stripes from the leaf tip.`,
+  conditions:`Favored by warm, humid weather with wind-driven rain. Spread through contaminated seed, splashing water, and field tools.`,
+  mgmt:{ cultural:[`Use certified pathogen-free seed`,`Avoid working in wet fields`,`Rotate crops`,`Remove and destroy infected residue`],
+    biological:[`Apply Bacillus-based biopesticides preventatively`],
+    plantExtract:[`Try a garlic-and-ginger extract spray`,`Apply neem extract preventively before wet weather`],
+    chemical:[`Apply copper-based sprays`,`Use streptomycin where regionally permitted and effective`],
+    resistant:[`Plant blight-resistant bean or rice varieties and lines`] } },
+
+{ id:'angular-leaf-spot', name:`Angular Leaf Spot`, sci:`Pseudomonas syringae pv. lachrymans / Xanthomonas fragariae`, type:'bacterial',
+  parts:['leaf','fruit'], crops:['Cucumber','Squash','Strawberry'],
+  tags:['L4','L6','F2'],
+  symptoms:`Small, angular, water-soaked spots bounded by leaf veins turn brown and often dry out and fall, leaving ragged holes. A milky bacterial ooze may appear on the underside in humid conditions, and fruit can develop water-soaked spots.`,
+  conditions:`Favored by high humidity, warm temperatures, and overhead irrigation or heavy dew.`,
+  mgmt:{ cultural:[`Use disease-free seed`,`Avoid overhead watering`,`Avoid handling wet foliage`,`Rotate crops and provide good airflow`],
+    biological:[`Apply copper-based biopesticides preventatively`],
+    plantExtract:[`Spray a garlic extract on a preventive schedule`,`Apply neem oil during humid weather`],
+    chemical:[`Apply copper-based sprays on a regular schedule during humid weather`],
+    resistant:[`Some angular-leaf-spot-tolerant cucumber varieties are available`] } },
+
+{ id:'bacterial-wilt', name:`Bacterial Wilt`, sci:`Ralstonia solanacearum / Erwinia tracheiphila`, type:'bacterial',
+  parts:['stem','whole'], crops:['Tomato','Potato','Cucumber','Squash','Banana'],
+  tags:['W1','S5','W2'],
+  symptoms:`Leaves and stems wilt rapidly without yellowing, often starting with just one or a few leaves before spreading to the whole plant. Cutting the stem reveals brown, slimy vascular tissue that can ooze a milky bacterial stream in water.`,
+  conditions:`Favored by warm soil temperatures and high moisture. Spread through contaminated soil, water, and tools, and in cucurbits by cucumber beetles.`,
+  mgmt:{ cultural:[`Rotate with non-host crops`,`Control insect vectors such as cucumber beetles`,`Sanitize tools between plants`,`Use disease-free planting material`],
+    biological:[`Limited options; healthy soil microbial activity offers only partial benefit`],
+    plantExtract:[`Work neem seed cake into the soil before planting`,`Try a garlic bulb extract soil drench around transplants`],
+    chemical:[`No effective curative bactericide exists`,`Control insect vectors with labeled insecticides to reduce spread`],
+    resistant:[`Plant bacterial-wilt-resistant tomato varieties or grafted rootstocks where available`] } },
+
+{ id:'bacterial-canker', name:`Bacterial Canker`, sci:`Clavibacter michiganensis subsp. michiganensis`, type:'bacterial',
+  parts:['leaf','stem','fruit'], crops:['Tomato'],
+  tags:['S1','L11','F9'],
+  symptoms:`Leaf margins wilt, curl, and brown while the midrib often stays green. Stems develop dark streaks and cankers that can split open, and fruit shows small, raised spots with a pale halo and dark center.`,
+  conditions:`Favored by warm, humid conditions. Spreads through contaminated seed, transplants, tools, and wounds from handling or pruning.`,
+  mgmt:{ cultural:[`Use certified pathogen-free seed and transplants`,`Sanitize tools and stakes between uses`,`Avoid working with wet plants`,`Remove and destroy infected plants promptly`],
+    biological:[`Apply copper-based products preventatively (moderate efficacy once established)`],
+    plantExtract:[`Spray a garlic extract after pruning or handling plants`,`Apply clove oil to fresh wounds as an antimicrobial rinse`],
+    chemical:[`Apply copper-based sprays combined with strict sanitation`],
+    resistant:[`Fully resistant commercial varieties are limited; clean seed is the primary defense`] } },
+
+{ id:'crown-gall', name:`Crown Gall`, sci:`Agrobacterium tumefaciens (Rhizobium radiobacter)`, type:'bacterial',
+  parts:['stem','root'], crops:['Grape','Apple','Rose','Tomato'],
+  tags:['S7','R2','W2'],
+  symptoms:`Rough, irregular galls form at the crown, root, or stem near the soil line, from pea-sized to several inches across. Galls interfere with water and nutrient transport, causing stunted growth and reduced vigor.`,
+  conditions:`Bacteria enter through wounds from transplanting, pruning, insects, or frost. Favored by wet soil and wounded tissue.`,
+  mgmt:{ cultural:[`Avoid wounding plants at the soil line`,`Inspect and discard galled nursery stock`,`Sanitize pruning tools`,`Avoid replanting susceptible species in infested soil`],
+    biological:[`Treat susceptible nursery stock with non-pathogenic Agrobacterium strain K84 before planting`],
+    plantExtract:[`Apply a garlic extract rinse to fresh wounds before planting`,`Work neem seed cake into the soil at planting`],
+    chemical:[`No effective chemical cure exists; focus on prevention and sanitation`],
+    resistant:[`Select tolerant rootstocks for orchard and vineyard plantings`] } },
+
+{ id:'bacterial-soft-rot', name:`Bacterial Soft Rot`, sci:`Pectobacterium (Erwinia) carotovorum / Dickeya spp.`, type:'bacterial',
+  parts:['root','stem','fruit'], crops:['Potato','Carrot','Onion','Cabbage','Squash'],
+  tags:['F3','R1','R5','S2'],
+  symptoms:`Tissue turns soft, mushy, and water-soaked with a strong foul odor. Affected areas can ooze and collapse into a slimy mass, often starting at a wound or point of contact with soil.`,
+  conditions:`Favored by warm, wet conditions and poor ventilation. Spreads through wounds, contaminated water, and bruising in storage.`,
+  mgmt:{ cultural:[`Handle produce carefully to avoid wounding`,`Ensure good field drainage`,`Cure and store produce at recommended cool, dry conditions`,`Remove infected material promptly`],
+    biological:[`Limited options; some Bacillus-based storage treatments reduce spread`],
+    plantExtract:[`Spray or dip produce in a diluted garlic extract after harvest`,`Rinse harvested produce in a turmeric extract wash before storage`],
+    chemical:[`No effective curative bactericide exists; copper sprays offer minor field benefit`],
+    resistant:[`Choose firmer-skinned, less wound-prone varieties and cure produce properly`] } },
+
+{ id:'fire-blight', name:`Fire Blight`, sci:`Erwinia amylovora`, type:'bacterial',
+  parts:['stem','leaf','whole'], crops:['Apple','Pear'],
+  tags:['S1','L15','W3'],
+  symptoms:`Blossoms, shoots, and leaves suddenly blacken and die as if scorched, often curling into a shepherd's-crook shape. Cankers form on branches and can ooze bacterial slime in humid weather.`,
+  conditions:`Favored by warm, wet, humid spring weather during bloom. Spread by rain, wind, and pollinating insects.`,
+  mgmt:{ cultural:[`Prune out infected wood well below symptoms during dry weather`,`Sanitize pruning tools between cuts`,`Avoid excess nitrogen fertilization`,`Remove nearby wild host plants`],
+    biological:[`Apply Bacillus subtilis or Pseudomonas fluorescens antagonists at bloom`],
+    plantExtract:[`Spray a garlic extract at bloom time`,`Apply neem oil as a preventive spray before wet bloom periods`],
+    chemical:[`Apply streptomycin or copper sprays timed to bloom, where locally permitted`],
+    resistant:[`Plant fire-blight-resistant apple and pear cultivars and rootstocks`] } },
+
+{ id:'mosaic-virus', name:`Mosaic Virus`, sci:`Tobacco mosaic virus / Cucumber mosaic virus`, type:'viral',
+  parts:['leaf','whole'], crops:['Tomato','Pepper','Cucumber','Tobacco','Squash'],
+  tags:['L9','L10','W2'],
+  symptoms:`Light and dark green mottled patterning covers the leaves, sometimes with distortion, blistering, or narrowing. Plants are often stunted with reduced, misshapen fruit.`,
+  conditions:`Spread mechanically through handling and contaminated tools, and by aphids for cucumber mosaic virus. Tobacco mosaic virus can survive on tools and debris for a long time.`,
+  mgmt:{ cultural:[`Remove and destroy infected plants`,`Wash hands and sanitize tools between plants`,`Control host weeds`,`Control aphid populations`],
+    biological:[`Encourage natural aphid predators to reduce spread`],
+    plantExtract:[`Spray neem oil to deter aphid vectors from feeding`,`Try a garlic-and-chili extract as an aphid repellent spray`],
+    chemical:[`No chemical cure exists for the virus itself`,`Insecticides can reduce aphid vector numbers but will not cure infected plants`],
+    resistant:[`Plant TMV/ToMV-resistant tomato and pepper varieties, widely available`] } },
+
+{ id:'leaf-curl-virus', name:`Leaf Curl Virus`, sci:`Tomato yellow leaf curl virus & related begomoviruses`, type:'viral',
+  parts:['leaf','whole'], crops:['Tomato','Pepper','Cotton','Cassava'],
+  tags:['L10','W2','W4'],
+  symptoms:`Leaves curl sharply upward, thicken, and yellow along the margins and between veins. Plants are severely stunted with reduced flowering and little to no fruit set.`,
+  conditions:`Transmitted by whiteflies. Favored by warm climates with high whitefly populations.`,
+  mgmt:{ cultural:[`Use whitefly-proof screening for transplants`,`Remove and destroy infected plants immediately`,`Control host weeds`,`Use reflective mulches to deter whiteflies`],
+    biological:[`Encourage natural whitefly predators and parasitoids (e.g. Encarsia wasps)`,`Use insecticidal soap for light infestations`],
+    plantExtract:[`Apply neem oil to disrupt whitefly feeding and egg-laying`,`Try a garlic extract spray as a whitefly repellent`],
+    chemical:[`Apply systemic insecticides targeting whitefly vectors in a resistance-management program`],
+    resistant:[`Plant leaf-curl-resistant or tolerant tomato varieties in high-pressure regions`] } },
+
+{ id:'ringspot-virus', name:`Ringspot Virus`, sci:`Papaya ringspot virus & related nepo/potyviruses`, type:'viral',
+  parts:['leaf','fruit','whole'], crops:['Papaya','Cucumber','Soybean','Squash'],
+  tags:['L9','F6','W2'],
+  symptoms:`Distinct ring-shaped or blotchy patterns appear on fruit skin, leaves become mottled and may distort, and the plant is generally stunted with reduced yield.`,
+  conditions:`Spread mainly by aphids, or by nematodes or pollen for some strains. Favored by high vector populations.`,
+  mgmt:{ cultural:[`Remove and destroy infected plants promptly`,`Control host weeds`,`Use virus-free planting material`,`Isolate new plantings from infected fields`],
+    biological:[`Encourage natural aphid predators to reduce vector pressure`],
+    plantExtract:[`Spray neem oil to reduce aphid vector landing and feeding`],
+    chemical:[`Insecticides reduce aphid vectors but do not cure infected plants`],
+    resistant:[`Plant ringspot-resistant papaya lines where available`] } },
+
+{ id:'bunchy-top-virus', name:`Bunchy Top Virus`, sci:`Banana bunchy top virus`, type:'viral',
+  parts:['leaf','whole'], crops:['Banana','Plantain'],
+  tags:['L18','W2','L10'],
+  symptoms:`New leaves emerge progressively narrower, more upright, and bunched at the top of the plant. Dark green streaks run along the veins in a dot-dash pattern, and infected plants rarely produce a usable bunch.`,
+  conditions:`Transmitted by the banana aphid. Spreads readily through infected planting material such as suckers.`,
+  mgmt:{ cultural:[`Use only certified virus-free tissue-cultured planting material`,`Rogue and destroy infected plants including the underground corm`,`Control banana aphid populations`],
+    biological:[`Encourage natural aphid predators (limited direct effect on the virus)`],
+    plantExtract:[`Apply neem oil around new growth to deter the banana aphid vector`],
+    chemical:[`Apply systemic insecticides to control the banana aphid vector`],
+    resistant:[`No fully immune commercial varieties exist; clean planting material is essential`] } },
+
+{ id:'potato-virus-y', name:`Potato Virus Y`, sci:`Potato virus Y (PVY)`, type:'viral',
+  parts:['leaf','whole','root'], crops:['Potato','Tomato','Pepper'],
+  tags:['L9','L10','W2'],
+  symptoms:`Mosaic mottling, leaf crinkling, and sometimes necrotic spots or streaks appear on leaves and stems. Tubers of sensitive varieties may show internal necrotic ring patterns, and overall vigor and yield drop.`,
+  conditions:`Spread rapidly by multiple aphid species and through infected seed tubers.`,
+  mgmt:{ cultural:[`Plant certified virus-free seed tubers`,`Rogue infected plants early`,`Control volunteer potatoes`,`Isolate seed potato fields from commercial fields`],
+    biological:[`Use reflective mulches and encourage natural aphid predators`],
+    plantExtract:[`Spray neem oil, which can reduce aphid probing and feeding`],
+    chemical:[`Apply mineral oil sprays to reduce non-persistent aphid transmission`,`Use insecticides to help reduce, not eliminate, spread`],
+    resistant:[`Plant PVY-resistant or tolerant potato varieties, especially for seed production`] } },
+
+{ id:'aster-yellows', name:`Aster Yellows`, sci:`Aster yellows phytoplasma`, type:'viral',
+  parts:['leaf','whole','root'], crops:['Carrot','Lettuce','Celery','Potato'],
+  tags:['W4','W2','L19'],
+  symptoms:`Plants show yellowing and stunting, with excessive, bushy proliferation of shoots or hairy secondary roots. Flowers may stay green and sterile, and carrot roots turn bitter, discolored, and unmarketable.`,
+  conditions:`Spread by leafhoppers, especially the aster leafhopper. Favored by high leafhopper populations and nearby infected weeds.`,
+  mgmt:{ cultural:[`Control leafhopper populations`,`Remove nearby infected weeds and volunteer plants`,`Use row covers on young plantings`],
+    biological:[`Encourage natural leafhopper predators and parasitoids`],
+    plantExtract:[`Apply neem oil to deter leafhopper vectors`,`Try a garlic extract spray as a general leafhopper repellent`],
+    chemical:[`Apply insecticides targeting leafhoppers to reduce spread`],
+    resistant:[`Some tolerant carrot and lettuce varieties exist, but resistance is generally limited`] } },
+
+{ id:'root-knot-nematode', name:`Root-Knot Nematode`, sci:`Meloidogyne spp.`, type:'nematode',
+  parts:['root','whole'], crops:['Tomato','Carrot','Cucumber','Okra','Pepper'],
+  tags:['R2','W2','W4'],
+  symptoms:`Small to large knots or galls form on roots, distorting their structure and impairing water and nutrient uptake. Above ground, plants are stunted, yellowed, and wilt readily in warm weather even with adequate soil moisture.`,
+  conditions:`Favored by warm, sandy soils. Populations build up quickly under continuous cropping of susceptible hosts.`,
+  mgmt:{ cultural:[`Rotate with non-host or resistant crops (cereals, marigold as a trap crop)`,`Solarize soil in warm climates`,`Add organic matter to boost antagonistic soil organisms`,`Sanitize tools and equipment`],
+    biological:[`Apply nematode-trapping fungi (e.g. Purpureocillium lilacinum)`,`Use Bacillus firmus-based bionematicides in soil`],
+    plantExtract:[`Work neem seed cake into the soil before planting`,`Intercrop with or apply marigold (Tagetes) root extract, documented to suppress root-knot populations`],
+    chemical:[`Apply nematicides (e.g. fluopyram-based products) at planting in severe cases`],
+    resistant:[`Plant root-knot-resistant varieties (often labeled "N") — highly effective`] } },
+
+{ id:'cyst-nematode', name:`Cyst Nematode`, sci:`Heterodera glycines / Globodera spp.`, type:'nematode',
+  parts:['root'], crops:['Soybean','Potato'],
+  tags:['R6','W2','R4'],
+  symptoms:`Tiny, round, lemon-shaped cysts (visible with a hand lens) attach to roots. Root systems become stunted and less branched, and above-ground plants show patchy yellowing, stunting, and reduced yield, often without obvious wilting.`,
+  conditions:`Cysts can survive in soil for many years even without a host. Favored by continuous cropping of susceptible hosts and sandy soils.`,
+  mgmt:{ cultural:[`Rotate with non-host crops for multiple years`,`Sanitize equipment between fields`,`Manage host weeds`],
+    biological:[`Use Bacillus firmus-based seed treatments or nematode-antagonistic fungi`],
+    plantExtract:[`Incorporate neem seed cake into the soil pre-plant`,`Use mustard biofumigant residues worked into the soil`],
+    chemical:[`Apply nematicide seed treatments in heavily infested fields`],
+    resistant:[`Plant cyst-nematode-resistant soybean and potato varieties`] } },
+
+{ id:'lesion-nematode', name:`Lesion Nematode`, sci:`Pratylenchus spp.`, type:'nematode',
+  parts:['root'], crops:['Potato','Maize','Carrot'],
+  tags:['R7','R4','W2'],
+  symptoms:`Dark, sunken lesions develop on roots as the nematode migrates and feeds within root tissue, leading to root decay, a reduced root system, and stunted, unthrifty growth above ground.`,
+  conditions:`Favored by a wide range of soils and temperatures; damage worsens when combined with soil-borne fungi entering through nematode wounds.`,
+  mgmt:{ cultural:[`Rotate with non-host or poor-host crops`,`Use clean planting material`,`Improve soil health and organic matter`,`Control host weeds`],
+    biological:[`Apply nematode-antagonistic fungi and Bacillus-based soil treatments at planting`],
+    plantExtract:[`Work neem seed cake into the soil before planting`,`Try a marigold (Tagetes) extract soil drench`],
+    chemical:[`Apply nematicides in severely infested fields, particularly for root and tuber crops`],
+    resistant:[`Some tolerant potato and maize lines are available`] } },
+
+{ id:'reniform-nematode', name:`Reniform Nematode`, sci:`Rotylenchulus reniformis`, type:'nematode',
+  parts:['root'], crops:['Cotton','Pepper','Okra','Pineapple'],
+  tags:['R4','W2','R1'],
+  symptoms:`Roots become stunted with reduced fine feeder roots. Above ground, plants show patchy stunting, yellowing, and reduced yield — symptoms easily confused with nutrient deficiency since obvious galls are absent.`,
+  conditions:`Favored by fine-textured soils with higher clay content. Populations build with continuous susceptible cropping.`,
+  mgmt:{ cultural:[`Rotate with non-host or resistant crops`,`Manage host weeds`,`Avoid moving infested soil on equipment`],
+    biological:[`Apply nematode-antagonistic fungi and bacterial bionematicides at planting`],
+    plantExtract:[`Incorporate neem seed cake into the soil as a pre-plant amendment`],
+    chemical:[`Apply nematicides in heavily infested, high-value fields`],
+    resistant:[`Some tolerant cotton and vegetable lines are available regionally`] } },
+
+{ id:'stem-bulb-nematode', name:`Stem and Bulb Nematode`, sci:`Ditylenchus dipsaci`, type:'nematode',
+  parts:['stem','root','whole'], crops:['Onion','Garlic','Alfalfa'],
+  tags:['S10','W2','R4'],
+  symptoms:`Stems and bulbs become swollen, soft, and distorted, with internal tissue breaking down into a spongy, discolored mass. Leaves may twist and thicken at the base, and plants are stunted with poor bulb development.`,
+  conditions:`Favored by cool, moist soil. Spreads through infected seed, bulbs, soil, and irrigation water, and can survive long dry spells dormant within plant tissue.`,
+  mgmt:{ cultural:[`Use certified nematode-free seed and bulbs`,`Rotate with non-host crops for several years`,`Avoid moving infested soil or equipment between fields`,`Remove and destroy infected debris`],
+    biological:[`Soil solarization can reduce populations in warm climates`],
+    plantExtract:[`Apply a neem extract soil drench around bulbs`,`Try a garlic extract drench at planting`],
+    chemical:[`Treat seed or bulbs with hot water before planting`,`Apply nematicides in severe, high-value infestations`],
+    resistant:[`Some tolerant onion and garlic lines exist, but resistance is not widespread`] } },
+
+{ id:'burrowing-nematode', name:`Burrowing Nematode`, sci:`Radopholus similis`, type:'nematode',
+  parts:['root','whole'], crops:['Banana','Plantain','Citrus','Black Pepper'],
+  tags:['R7','R4','W2'],
+  symptoms:`Nematodes tunnel through root tissue, causing reddish-brown lesions that expand and coalesce into root rot and root system collapse. Plants are poorly anchored, stunted, and prone to toppling in wind.`,
+  conditions:`Favored by warm, moist soils. Spread mainly through infected planting material and contaminated soil or water.`,
+  mgmt:{ cultural:[`Use only certified nematode-free planting material`,`Remove and destroy severely infested plants and root systems`,`Rotate with non-host crops`,`Practice good field sanitation`],
+    biological:[`Apply nematode-antagonistic fungi and Bacillus-based bionematicides around planting`],
+    plantExtract:[`Work neem seed cake into the soil before planting`,`Try a papaya leaf extract soil drench, traditionally used against burrowing nematodes`],
+    chemical:[`Apply nematicides at planting in heavily infested commercial operations`],
+    resistant:[`Plant resistant or tolerant banana cultivars and citrus rootstocks where available`] } },
+];
+
+const INSECTS = [
+{ id:'lepidoptera-caterpillars', name:`Caterpillars & Armyworms`, sci:`Order Lepidoptera — moths & butterflies`, type:'insect',
+  parts:['leaf','fruit','stem'], crops:['Maize','Cabbage','Tomato','Cotton','Cowpea','Cucurbits'],
+  tags:['L20','F10','S11','W6'],
+  symptoms:`Larvae (caterpillars) chew ragged holes through leaves and can strip entire plants when numbers are high. Species such as fruit borers and bollworms tunnel directly into fruit, pods, or stems, leaving a visible entry hole plugged with frass. Armyworms move through a field in bands, defoliating row after row within days.`,
+  conditions:`Moths lay eggs on host leaves at night; warm, humid weather speeds egg hatch and larval development. Outbreaks often follow periods of lush vegetative growth or coincide with moth migration events.`,
+  mgmt:{ cultural:[`Hand-pick and destroy visible caterpillars and egg clusters`,`Rotate crops and plough in crop residue to disrupt pupae in the soil`,`Use pheromone traps to monitor and mass-trap adult moths`,`Encourage natural predators and parasitic wasps by preserving field margins`],
+    biological:[`Apply Bacillus thuringiensis (Bt) sprays, which target caterpillars specifically`,`Release or conserve parasitic wasps (e.g. Trichogramma) and predatory insects`],
+    plantExtract:[`Spray neem seed extract or neem oil, which disrupts larval feeding and development`,`Try a garlic-and-chili extract spray as a feeding deterrent`],
+    chemical:[`Apply labeled insecticides (e.g. spinosad, chlorantraniliprole) when larvae are small`,`Rotate insecticide classes to slow resistance development`],
+    resistant:[`Plant Bt-expressing varieties where locally approved and available`,`Choose early-maturing varieties to reduce exposure to peak moth flights`] } },
+
+{ id:'coleoptera-beetles', name:`Beetles & Weevils`, sci:`Order Coleoptera`, type:'insect',
+  parts:['leaf','root','fruit'], crops:['Potato','Cucumber','Bean','Maize','Cowpea','Squash'],
+  tags:['L21','R8','F10'],
+  symptoms:`Adult beetles chew irregular holes in leaves and can skeletonize foliage down to the veins when populations are dense. Root-feeding grubs weaken plants from below, stunting growth and increasing susceptibility to wilting. Weevils bore into pods, tubers, or stored grain, leaving small round exit holes.`,
+  conditions:`Most beetles overwinter in soil or crop debris and emerge as temperatures warm in spring. Continuous cropping of the same host builds up local populations year over year.`,
+  mgmt:{ cultural:[`Rotate crops to break the life cycle of soil-dwelling grubs`,`Hand-pick adult beetles in small plantings`,`Use row covers to exclude adults during peak emergence`,`Till soil after harvest to expose overwintering beetles to predators and weather`],
+    biological:[`Apply entomopathogenic nematodes to soil to target root-feeding grubs`,`Encourage ground beetles and birds that prey on adult beetles`],
+    plantExtract:[`Spray neem extract, which disrupts beetle feeding and development`,`Dust plant-based powders (e.g. diatomaceous earth) around stem bases to deter crawling adults`],
+    chemical:[`Apply labeled insecticides at first sign of adult feeding damage`,`Use systemic seed or soil treatments where grub pressure is historically high`],
+    resistant:[`Plant beetle-tolerant varieties where available (e.g. some Colorado-potato-beetle-tolerant potato lines)`] } },
+
+{ id:'hemiptera-sapsuckers', name:`Aphids, Whiteflies & Leafhoppers`, sci:`Order Hemiptera — true bugs & allies`, type:'insect',
+  parts:['leaf','fruit','whole'], crops:['Tomato','Pepper','Cotton','Cabbage','Cucurbits','Citrus'],
+  tags:['L23','L10','F11','W2'],
+  symptoms:`Aphids, whiteflies, and leafhoppers pierce plant tissue and suck sap, causing leaves to curl, yellow, and stunt. Many excrete sticky honeydew that coats leaves and attracts black sooty mold. Stink bugs and plant bugs pierce fruit, leaving sunken puncture marks or stippled scarring. This order also carries many of the plant viruses described elsewhere in this guide.`,
+  conditions:`Populations build quickly in warm weather and explode when natural enemies are disrupted by broad-spectrum insecticide use. Dense, water-stressed, or over-fertilized plantings are especially attractive.`,
+  mgmt:{ cultural:[`Use reflective mulches to disorient and repel winged aphids and whiteflies`,`Remove heavily infested leaves and nearby weeds that host the pests`,`Avoid excess nitrogen fertilizer, which encourages soft, attractive new growth`,`Inspect transplants closely before planting`],
+    biological:[`Encourage or release ladybird beetles, lacewings, and parasitic wasps`,`Use insecticidal soap for a gentle, targeted knockdown`],
+    plantExtract:[`Spray neem oil, which disrupts feeding and reproduction in soft-bodied sap-suckers`,`Try a garlic-and-pepper extract spray as a repellent on young growth`],
+    chemical:[`Apply systemic insecticides only where pressure is high, to limit harm to natural enemies`,`Rotate chemical classes to manage resistance, especially in whiteflies`],
+    resistant:[`Choose aphid- or whitefly-tolerant varieties where available, especially for virus-prone crops`] } },
+
+{ id:'thysanoptera-thrips', name:`Thrips`, sci:`Order Thysanoptera`, type:'insect',
+  parts:['leaf','fruit','whole'], crops:['Onion','Tomato','Pepper','Cotton','Bean'],
+  tags:['L22','F11','W2'],
+  symptoms:`Thrips rasp and scrape the leaf surface to feed on the released sap, leaving a silvery, speckled, or scarred appearance. Fruit can develop pale scarring or russeting. Heavy infestations distort young growth and stunt the plant. Some species also transmit plant viruses.`,
+  conditions:`Hot, dry conditions favor rapid thrips population growth. Populations often surge after rain following drought, or when they move in from drying weeds and nearby crops.`,
+  mgmt:{ cultural:[`Use blue or yellow sticky traps to monitor and reduce adult numbers`,`Remove and destroy heavily infested plant debris`,`Keep fields free of drought-stressed weeds that host thrips`,`Use fine mesh row covers on young transplants`],
+    biological:[`Encourage predatory mites and minute pirate bugs, both effective thrips predators`,`Apply insecticidal soap to target nymphs directly`],
+    plantExtract:[`Spray neem oil, which reduces thrips feeding and reproduction`,`Try a garlic extract spray as a repellent during peak activity`],
+    chemical:[`Apply labeled insecticides targeted at thrips, rotating modes of action to slow resistance`],
+    resistant:[`Plant thrips-tolerant onion and vegetable varieties where available`] } },
+
+{ id:'diptera-flies', name:`Fruit Flies, Leafminers & Maggots`, sci:`Order Diptera — true flies`, type:'insect',
+  parts:['leaf','fruit','root'], crops:['Mango','Cucurbits','Citrus','Onion','Tomato','Bean'],
+  tags:['L24','F10','R9'],
+  symptoms:`Leafminer larvae tunnel through leaf tissue, leaving pale winding trails visible from outside. Fruit fly larvae develop inside ripening fruit, leaving tiny entry punctures that lead to internal rot and premature drop. Root and bulb maggots tunnel into underground parts, opening the door to secondary rot.`,
+  conditions:`Warm, humid weather speeds the fly life cycle from egg to adult. Ripening or overripe fruit left on the plant or ground strongly attracts egg-laying females.`,
+  mgmt:{ cultural:[`Collect and destroy fallen or infested fruit promptly`,`Bag or net developing fruit to block egg-laying`,`Rotate crops and till soil to disrupt pupae overwintering underground`,`Remove and destroy mined leaves as soon as trails appear`],
+    biological:[`Hang fruit-fly traps baited with a food or pheromone lure to catch adults`,`Encourage parasitic wasps that attack leafminer larvae`],
+    plantExtract:[`Use neem extract sprays, which deter egg-laying and disrupt larval development`,`Try a basil or citrus-peel extract spray as a fruit fly repellent near ripening fruit`],
+    chemical:[`Apply bait sprays combining an attractant with a labeled insecticide for fruit flies`,`Use targeted insecticides for leafminers only when natural enemies fail to keep pace`],
+    resistant:[`Choose thicker-skinned fruit varieties less prone to fruit fly puncture where available`] } },
+
+{ id:'orthoptera-grasshoppers', name:`Grasshoppers & Locusts`, sci:`Order Orthoptera`, type:'insect',
+  parts:['leaf','whole'], crops:['Maize','Millet','Sorghum','Cassava','Vegetables (general)'],
+  tags:['W6','W7','L20'],
+  symptoms:`Grasshoppers and locusts chew large, ragged sections out of leaves and can strip a plant to bare stems. In swarm phase, locusts move across fields in dense, fast-moving bands and can defoliate large areas within hours.`,
+  conditions:`Hot, dry conditions followed by a flush of green growth favor population buildup. Locust swarms are triggered by specific regional weather patterns and are tracked by national and regional early-warning systems.`,
+  mgmt:{ cultural:[`Monitor field margins and grassy areas where nymphs first build up`,`Till soil after harvest to destroy egg pods laid in the ground`,`Use barrier trenches or netting to protect high-value seedling beds`,`Report locust swarm sightings to local agricultural authorities promptly`],
+    biological:[`Encourage birds and predatory insects that feed on nymphs`,`Apply biological insecticides based on Metarhizium fungus where available, effective against hoppers`],
+    plantExtract:[`Spray neem extract on young nymphs, which reduces feeding and development`,`Try a hot chili-and-garlic extract as a feeding deterrent on seedlings`],
+    chemical:[`Apply labeled insecticides promptly while hoppers are still concentrated in bands, before they disperse or take flight`],
+    resistant:[`Few resistant vegetable varieties exist; early warning and rapid response are the main defense`] } },
+];
+
+const ENTRIES = DISEASES.concat(INSECTS);
+const ALL_CROPS = Array.from(new Set(ENTRIES.flatMap(d=>d.crops))).sort();
+
+/* ============================= ICONS ============================= */
+function icon(name, cls){
+  const c = cls || 'icon';
+  const paths = {
+    leaf: `<path d="M10 38C10 20 22 8 40 8C40 26 28 38 10 38Z"/><path d="M10 38C18 30 26 22 38 10"/>`,
+    stem: `<path d="M24 42V10"/><path d="M24 26C24 26 32 24 34 16"/><path d="M24 18C24 18 16 16 14 8"/>`,
+    root: `<path d="M24 6V20"/><path d="M24 20C24 20 14 24 10 40"/><path d="M24 20C24 20 34 24 38 40"/><path d="M24 20C24 20 20 30 16 34"/><path d="M24 20C24 20 28 30 32 34"/>`,
+    fruit:`<circle cx="24" cy="28" r="14"/><path d="M24 14V8"/><path d="M24 8C24 8 20 4 16 6"/>`,
+    whole:`<path d="M24 40V22"/><path d="M24 22C24 22 34 20 36 10"/><path d="M24 26C24 26 14 24 12 14"/><path d="M14 40H34"/>`,
+    fungal:`<path d="M8 22C8 12 16 6 24 6C32 6 40 12 40 22C32 18 16 18 8 22Z"/><path d="M20 22V38C20 40 22 42 24 42C26 42 28 40 28 38V22"/>`,
+    bacterial:`<rect x="6" y="17" width="21" height="11" rx="5.5"/><rect x="22" y="29" width="21" height="11" rx="5.5" transform="rotate(14 32.5 34.5)"/>`,
+    viral:`<polygon points="24,7 35,13.5 35,26.5 24,33 13,26.5 13,13.5"/><line x1="24" y1="7" x2="24" y2="1"/><line x1="35" y1="13.5" x2="41.5" y2="9.5"/><line x1="35" y1="26.5" x2="41.5" y2="30.5"/><line x1="24" y1="33" x2="24" y2="39"/><line x1="13" y1="26.5" x2="6.5" y2="30.5"/><line x1="13" y1="13.5" x2="6.5" y2="9.5"/>`,
+    nematode:`<path d="M9 15C9 15 5 25 13 31C21 37 34 32 39 21"/><circle cx="9" cy="15" r="2" fill="currentColor" stroke="none"/>`,
+    back:`<path d="M29 8L15 24L29 40"/>`,
+    star:`<path d="M24 6L29 19L43 20L32 29L36 43L24 35L12 43L16 29L5 20L19 19Z"/>`,
+    seed:`<circle cx="24" cy="24" r="16"/><path d="M24 14V24L31 30"/>`,
+    flask:`<path d="M19 6H29"/><path d="M21 6V19L10 38C9 40 10 42 12 42H36C38 42 39 40 38 38L27 19V6"/><path d="M15 30H33"/>`,
+    bug:`<circle cx="24" cy="26" r="10"/><path d="M24 16V6"/><path d="M18 10L24 16L30 10"/><path d="M14 22L6 18"/><path d="M14 30L6 34"/><path d="M34 22L42 18"/><path d="M34 30L42 34"/>`,
+    hand:`<path d="M10 26C10 26 8 16 16 12C24 8 34 12 36 22C38 32 32 42 22 42C14 42 8 36 8 30"/>`,
+    search:`<circle cx="21" cy="21" r="13"/><path d="M31 31L42 42"/>`,
+    chevron:`<path d="M12 18L24 30L36 18"/>`,
+  };
+  return `<svg class="${c}" viewBox="0 0 48 48">${paths[name]||''}</svg>`;
+}
+
+/* ============================= ILLUSTRATIONS =============================
+   Original, hand-designed field-guide style artwork — not photographs.
+   Each disease gets a deterministic (seeded) illustration combining a base
+   crop-part shape with a symptom overlay drawn in its pathogen-type color. */
+function seededRng(str){
+  let h = 2166136261;
+  for(let i=0;i<str.length;i++){ h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+  let s = h >>> 0;
+  return function(){
+    s |= 0; s = (s + 0x6D2B79F5) | 0;
+    let t = Math.imul(s ^ (s >>> 15), 1 | s);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function rnd(rng, min, max){ return min + rng() * (max - min); }
+
+const TISSUE = {
+  leafLight:'#8FD17A', leafDark:'#4F9D52', vein:'#2F6B34',
+  stem:'#6FB05B', stemDark:'#4C8A44',
+  root:'#E4C892', rootDark:'#C9A968',
+  fruit:'#E2704B', fruitDark:'#C1512F',
+  soil:'#8B6A44', wilt:'#B79A52', wiltDark:'#8C7539',
+};
+
+function leafSimple(fill){
+  return `<path d="M80,148 C40,128 25,78 55,36 C65,23 80,15 80,15 C80,15 95,22 105,36 C135,78 120,128 80,148 Z" fill="${fill||TISSUE.leafLight}"/>`;
+}
+function baseLeaf(o){
+  o = o || {};
+  const light = o.wilt ? TISSUE.wilt : TISSUE.leafLight;
+  const dark = o.wilt ? TISSUE.wiltDark : TISSUE.leafDark;
+  const tip = o.curl ? '95,22' : '80,15';
+  const group = o.wilt ? `transform="rotate(46 80 148)"` : '';
+  return `<g ${group}>
+    <path d="M80,148 C40,128 25,78 55,36 C65,23 ${tip} C80,15 95,22 105,36 C135,78 120,128 80,148 Z" fill="${light}"/>
+    <path d="M80,148 C100,132 115,100 108,58 C104,40 95,26 ${tip} C135,78 120,128 80,148 Z" fill="${dark}" opacity="0.5"/>
+    <path d="M80,28 L80,143" stroke="${TISSUE.vein}" stroke-width="3" stroke-linecap="round"/>
+    <path d="M80,55 L60,70 M80,55 L100,70 M80,85 L58,100 M80,85 L102,100 M80,113 L64,123 M80,113 L96,123" stroke="${TISSUE.vein}" stroke-width="2" stroke-linecap="round" opacity="0.65"/>
+    <path d="M80,148 L80,158" stroke="${TISSUE.stemDark}" stroke-width="5" stroke-linecap="round"/>
+    ${o.curl ? `<path d="M100,40 C114,54 111,76 96,88 C104,73 101,54 90,44 Z" fill="#DCE9D3" opacity="0.85"/>` : ''}
+  </g>`;
+}
+function baseStem(o){
+  o = o || {};
+  return `<g>
+    <path d="M74,158 C72,120 71,80 74,42 C75,24 85,24 86,42 C89,80 88,120 86,158 Z" fill="${TISSUE.stem}"/>
+    <path d="M80,158 C79,120 79,80 80,42 L86,42 C89,80 88,120 86,158 Z" fill="${TISSUE.stemDark}" opacity="0.45"/>
+    ${o.swell ? `<ellipse cx="80" cy="98" rx="27" ry="21" fill="${TISSUE.wilt}"/><ellipse cx="80" cy="98" rx="27" ry="21" fill="none" stroke="${TISSUE.wiltDark}" stroke-width="2"/>` : ''}
+    <g transform="translate(74,58) rotate(-30) scale(0.4)">${leafSimple()}</g>
+    <g transform="translate(86,98) rotate(35) scale(0.35)">${leafSimple()}</g>
+  </g>`;
+}
+function baseRoot(o){
+  o = o || {};
+  const laterals = o.sparse
+    ? [{y:72,dx:-26,dy:22},{y:112,dx:22,dy:18}]
+    : [{y:55,dx:-34,dy:20},{y:55,dx:34,dy:18},{y:90,dx:-30,dy:28},{y:90,dx:30,dy:30},{y:122,dx:-20,dy:18},{y:122,dx:20,dy:20}];
+  const bottom = o.sparse ? 126 : 148;
+  const lateralPaths = laterals.map(l=>{
+    const x1 = 80+l.dx, y1 = l.y+l.dy, cx = 80+l.dx*0.6, cy = l.y+l.dy*0.3;
+    return `<path d="M80,${l.y} Q${cx.toFixed(1)},${cy.toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)}" fill="none" stroke="${TISSUE.root}" stroke-width="4" stroke-linecap="round"/>`;
+  }).join('');
+  return `<g>
+    <line x1="46" y1="30" x2="114" y2="30" stroke="${TISSUE.soil}" stroke-width="2" stroke-dasharray="4 4" opacity="0.55"/>
+    <path d="M77,10 L77,30" stroke="${TISSUE.stemDark}" stroke-width="5" stroke-linecap="round"/>
+    <path d="M77,16 L64,10 M77,16 L90,8" stroke="${TISSUE.leafDark}" stroke-width="4" stroke-linecap="round"/>
+    <path d="M80,30 C78,${bottom-78} 82,${bottom-38} 79,${bottom} C78,${bottom+5} 84,${bottom+5} 83,${bottom} C87,${bottom-38} 84,${bottom-78} 83,30 Z" fill="${TISSUE.root}"/>
+    <path d="M80,30 C79,${bottom-78} 80,${bottom-38} 80,${bottom} L83,${bottom} C87,${bottom-38} 84,${bottom-78} 83,30 Z" fill="${TISSUE.rootDark}" opacity="0.45"/>
+    ${lateralPaths}
+  </g>`;
+}
+function baseFruit(){
+  return `<g>
+    <ellipse cx="80" cy="92" rx="46" ry="42" fill="${TISSUE.fruit}"/>
+    <path d="M80,50 C104,54 126,74 126,94 C110,80 96,72 80,72 Z" fill="${TISSUE.fruitDark}" opacity="0.4"/>
+    <ellipse cx="62" cy="76" rx="14" ry="9" fill="#FFFFFF" opacity="0.25"/>
+    <path d="M80,50 L80,36" stroke="${TISSUE.stemDark}" stroke-width="5" stroke-linecap="round"/>
+    <path d="M80,40 C72,32 62,32 58,38 C68,40 74,44 80,50 Z" fill="${TISSUE.leafDark}"/>
+    <path d="M80,40 C88,32 98,32 102,38 C92,40 86,44 80,50 Z" fill="${TISSUE.leafLight}"/>
+  </g>`;
+}
+function baseWhole(o){
+  o = o || {};
+  const bend = o.wilt ? 'rotate(30 78 128)' : '';
+  const stemColor = o.wilt ? TISSUE.wiltDark : TISSUE.stem;
+  return `<g>
+    <ellipse cx="80" cy="150" rx="52" ry="10" fill="${TISSUE.soil}" opacity="0.32"/>
+    <g transform="${bend}">
+      <path d="M78,150 C76,120 77,90 79,60" stroke="${stemColor}" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <g transform="translate(79,60) rotate(${o.wilt?70:-25}) scale(0.5)">${leafSimple(o.wilt?TISSUE.wilt:null)}</g>
+      <g transform="translate(78,95) rotate(${o.wilt?95:35}) scale(0.42)">${leafSimple(o.wilt?TISSUE.wilt:null)}</g>
+      <g transform="translate(80,118) rotate(${o.wilt?60:-40}) scale(0.38)">${leafSimple(o.wilt?TISSUE.wilt:null)}</g>
+    </g>
+  </g>`;
+}
+
+function ovSpots(rng,color,o){
+  o=o||{}; const n=o.count||7; let out='';
+  for(let i=0;i<n;i++){
+    const cx=rnd(rng,50,110), cy=rnd(rng,40,135), r=rnd(rng,o.minR||4,o.maxR||8);
+    if(o.halo) out+=`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${(r*2.1).toFixed(1)}" fill="${color}" opacity="0.2"/>`;
+    if(o.angular){
+      const pts=[]; const sides=5;
+      for(let s=0;s<sides;s++){ const ang=(s/sides)*Math.PI*2+rnd(rng,-0.3,0.3), rr=r*rnd(rng,0.7,1.15);
+        pts.push(`${(cx+Math.cos(ang)*rr).toFixed(1)},${(cy+Math.sin(ang)*rr).toFixed(1)}`); }
+      out+=`<polygon points="${pts.join(' ')}" fill="${color}" opacity="0.82"/>`;
+    } else {
+      out+=`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r.toFixed(1)}" fill="${color}" opacity="0.82"/>`;
+    }
+  }
+  return out;
+}
+function ovRings(rng,color,o){
+  o=o||{}; const n=o.count||3; let out='';
+  for(let i=0;i<n;i++){
+    const cx=rnd(rng,55,105), cy=rnd(rng,50,120), r=rnd(rng,9,15);
+    out+=`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r.toFixed(1)}" fill="none" stroke="${color}" stroke-width="2.4" opacity="0.78"/>`;
+    out+=`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${(r*0.5).toFixed(1)}" fill="none" stroke="${color}" stroke-width="2" opacity="0.6"/>`;
+    out+=`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="1.6" fill="${color}" opacity="0.85"/>`;
+  }
+  return out;
+}
+function ovFuzz(rng,color,o){
+  o=o||{}; const cx=o.cx||80, cy=o.cy||95, spread=o.spread||30, n=o.count||16; let out='';
+  for(let i=0;i<n;i++){
+    const x=cx+rnd(rng,-spread,spread), y=cy+rnd(rng,-spread*0.7,spread*0.7), r=rnd(rng,4,9);
+    out+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" fill="${color}" opacity="0.3"/>`;
+  }
+  return out;
+}
+function ovPowder(rng,color){
+  let out=`<ellipse cx="80" cy="85" rx="34" ry="50" fill="${color}" opacity="0.16"/>`;
+  for(let i=0;i<34;i++){
+    const x=rnd(rng,52,108), y=rnd(rng,40,132);
+    out+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rnd(rng,1,2.4).toFixed(1)}" fill="${color}" opacity="0.72"/>`;
+  }
+  return out;
+}
+function ovBlotch(rng,color,o){
+  o=o||{}; const cx=o.cx||82, cy=o.cy||80, rx=o.rx||30, ry=o.ry||34, n=10; const pts=[];
+  for(let i=0;i<n;i++){ const ang=(i/n)*Math.PI*2, rr=rnd(rng,0.7,1.15);
+    pts.push(`${(cx+Math.cos(ang)*rx*rr).toFixed(1)},${(cy+Math.sin(ang)*ry*rr).toFixed(1)}`); }
+  return `<polygon points="${pts.join(' ')}" fill="${color}" opacity="0.52"/>`;
+}
+function ovBumps(rng,color,o){
+  o=o||{}; const n=o.count||5; let out='';
+  const positions = o.positions || Array.from({length:n}).map(()=>({x:rnd(rng,55,105), y:rnd(rng,50,140)}));
+  positions.forEach(p=>{
+    const r=rnd(rng,6,10);
+    out+=`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${r.toFixed(1)}" fill="${color}" opacity="0.72"/>`;
+    out+=`<circle cx="${(p.x-r*0.3).toFixed(1)}" cy="${(p.y-r*0.3).toFixed(1)}" r="${(r*0.35).toFixed(1)}" fill="#fff" opacity="0.3"/>`;
+  });
+  return out;
+}
+function ovCystDots(rng,color){
+  let out='';
+  for(let i=0;i<9;i++){
+    const x=rnd(rng,58,102), y=rnd(rng,40,140);
+    out+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" fill="#F3ECD8" stroke="${color}" stroke-width="1.4"/>`;
+  }
+  return out;
+}
+function ovMosaic(rng,color){
+  let out='';
+  for(let i=0;i<7;i++){
+    const cx=rnd(rng,55,105), cy=rnd(rng,40,135), rx=rnd(rng,10,18), ry=rnd(rng,8,15), rot=rnd(rng,-30,30);
+    out+=`<ellipse cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" rx="${rx.toFixed(1)}" ry="${ry.toFixed(1)}" fill="${color}" opacity="0.26" transform="rotate(${rot.toFixed(0)} ${cx.toFixed(1)} ${cy.toFixed(1)})"/>`;
+  }
+  return out;
+}
+function ovVeinStreak(rng,color,o){
+  o=o||{}; const n=o.count||5; let out='';
+  for(let i=0;i<n;i++){
+    const y0=rnd(rng,30,50), y1=y0+rnd(rng,60,90), x0=80+rnd(rng,-4,4), x1=x0+rnd(rng,-8,8);
+    out+=`<path d="M${x0.toFixed(1)},${y0.toFixed(1)} Q${((x0+x1)/2+rnd(rng,-6,6)).toFixed(1)},${((y0+y1)/2).toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)}" stroke="${color}" stroke-width="2" fill="none" opacity="0.72"/>`;
+  }
+  return out;
+}
+function ovScorch(rng,color){
+  return `<path d="M80,15 C95,22 105,36 108,58 C112,80 104,100 90,112 C98,86 92,55 80,30 Z" fill="${color}" opacity="0.52"/>`;
+}
+
+const VISUALS = {
+  'powdery-mildew': { shape:'leaf', overlay:ovPowder },
+  'downy-mildew': { shape:'leaf', overlay:ovSpots, overlayOpts:{angular:true, halo:true, count:6} },
+  'rust': { shape:'leaf', overlay:ovSpots, overlayOpts:{count:14, minR:2, maxR:3.5} },
+  'septoria-leaf-spot': { shape:'leaf', overlay:ovSpots, overlayOpts:{halo:true, count:9, minR:2.5, maxR:4} },
+  'early-blight': { shape:'leaf', overlay:ovRings, overlayOpts:{count:3} },
+  'late-blight': { shape:'leaf', shapeOpts:{wilt:true}, overlay:ovBlotch, overlayOpts:{cx:82,cy:75,rx:34,ry:36} },
+  'anthracnose': { shape:'fruit', overlay:ovRings, overlayOpts:{count:2} },
+  'gray-mold': { shape:'fruit', overlay:ovFuzz, overlayOpts:{cx:80,cy:95,spread:32,count:20} },
+  'fusarium-wilt': { shape:'whole', shapeOpts:{wilt:true}, overlay:ovVeinStreak, overlayOpts:{count:3} },
+  'verticillium-wilt': { shape:'leaf', overlay:ovScorch },
+  'southern-blight': { shape:'stem', overlay:ovFuzz, overlayOpts:{cx:80,cy:145,spread:22,count:14} },
+  'damping-off': { shape:'root', shapeOpts:{sparse:true}, overlay:ovBlotch, overlayOpts:{cx:80,cy:118,rx:16,ry:12} },
+  'clubroot': { shape:'root', overlay:ovBumps, overlayOpts:{positions:[{x:70,y:70},{x:92,y:95},{x:66,y:118},{x:96,y:130}]} },
+  'white-mold': { shape:'stem', overlay:ovFuzz, overlayOpts:{cx:80,cy:100,spread:26,count:16} },
+  'bacterial-leaf-spot': { shape:'leaf', overlay:ovSpots, overlayOpts:{halo:true, count:8} },
+  'bacterial-blight': { shape:'leaf', overlay:ovBlotch, overlayOpts:{cx:78,cy:70,rx:28,ry:30} },
+  'angular-leaf-spot': { shape:'leaf', overlay:ovSpots, overlayOpts:{angular:true, count:9} },
+  'bacterial-wilt': { shape:'whole', shapeOpts:{wilt:true} },
+  'bacterial-canker': { shape:'stem', overlay:ovVeinStreak, overlayOpts:{count:2} },
+  'crown-gall': { shape:'root', overlay:ovBumps, overlayOpts:{positions:[{x:74,y:35},{x:90,y:48},{x:78,y:58}]} },
+  'bacterial-soft-rot': { shape:'root', overlay:ovBlotch, overlayOpts:{cx:80,cy:120,rx:20,ry:22} },
+  'fire-blight': { shape:'stem', overlay:ovBlotch, overlayOpts:{cx:80,cy:45,rx:16,ry:22} },
+  'mosaic-virus': { shape:'leaf', overlay:ovMosaic },
+  'leaf-curl-virus': { shape:'leaf', shapeOpts:{curl:true}, overlay:ovMosaic },
+  'ringspot-virus': { shape:'fruit', overlay:ovRings, overlayOpts:{count:3} },
+  'bunchy-top-virus': { shape:'leaf', overlay:ovVeinStreak, overlayOpts:{count:6} },
+  'potato-virus-y': { shape:'leaf', overlay:ovMosaic },
+  'aster-yellows': { shape:'whole', overlay:ovVeinStreak, overlayOpts:{count:4} },
+  'root-knot-nematode': { shape:'root', overlay:ovBumps, overlayOpts:{count:6} },
+  'cyst-nematode': { shape:'root', overlay:ovCystDots },
+  'lesion-nematode': { shape:'root', overlay:ovSpots, overlayOpts:{halo:true, count:7, minR:2.5, maxR:4} },
+  'reniform-nematode': { shape:'root', shapeOpts:{sparse:true} },
+  'stem-bulb-nematode': { shape:'stem', shapeOpts:{swell:true} },
+  'burrowing-nematode': { shape:'root', overlay:ovBlotch, overlayOpts:{cx:80,cy:100,rx:18,ry:40} },
+  'lepidoptera-caterpillars': { shape:'leaf', overlay:ovSpots, overlayOpts:{angular:true, count:10, minR:3, maxR:6} },
+  'coleoptera-beetles': { shape:'leaf', overlay:ovBlotch, overlayOpts:{cx:80,cy:80,rx:28,ry:32} },
+  'hemiptera-sapsuckers': { shape:'leaf', shapeOpts:{curl:true}, overlay:ovFuzz, overlayOpts:{cx:80,cy:60,spread:26,count:14} },
+  'thysanoptera-thrips': { shape:'leaf', overlay:ovPowder },
+  'diptera-flies': { shape:'leaf', overlay:ovVeinStreak, overlayOpts:{count:6} },
+  'orthoptera-grasshoppers': { shape:'leaf', overlay:ovBlotch, overlayOpts:{cx:80,cy:85,rx:36,ry:50} },
+};
+
+function illustration(d, size){
+  size = size || 120;
+  const v = VISUALS[d.id] || { shape:'leaf' };
+  let base = '';
+  if(v.shape==='leaf') base = baseLeaf(v.shapeOpts);
+  else if(v.shape==='stem') base = baseStem(v.shapeOpts);
+  else if(v.shape==='root') base = baseRoot(v.shapeOpts);
+  else if(v.shape==='fruit') base = baseFruit();
+  else if(v.shape==='whole') base = baseWhole(v.shapeOpts);
+  let overlay = '';
+  if(v.overlay){ overlay = v.overlay(seededRng(d.id), `var(--${d.type})`, v.overlayOpts); }
+  return `<svg viewBox="0 0 160 160" width="${size}" height="${size}" role="img" aria-label="${d.name} symptom illustration">${base}${overlay}</svg>`;
+}
+
+/* ============================= STATE ============================= */
+const state = {
+  view: 'diagnose',
+  diag: { step:1, part:null, checked:new Set() },
+  browse: { search:'', types:new Set(), parts:new Set(), crops:new Set(), openFilter:null },
+  detailId: null,
+  detailFrom: 'browse',
+};
+
+function loadSaved(){
+  try{
+    const raw = localStorage.getItem('cropclinic_saved');
+    return raw ? new Set(JSON.parse(raw)) : new Set();
+  }catch(e){ return new Set(); }
+}
+function persistSaved(){
+  try{ localStorage.setItem('cropclinic_saved', JSON.stringify(Array.from(state.saved))); }catch(e){}
+}
+state.saved = loadSaved();
+
+function loadTheme(){
+  try{ return localStorage.getItem('cropclinic_theme'); }catch(e){ return null; }
+}
+function applyTheme(t){
+  if(t==='light' || t==='dark'){ document.documentElement.setAttribute('data-theme', t); }
+  else { document.documentElement.removeAttribute('data-theme'); }
+}
+applyTheme(loadTheme());
+
+/* ============================= HELPERS ============================= */
+function diseaseById(id){ return ENTRIES.find(d=>d.id===id); }
+
+function matchScore(disease, part, checked){
+  const letter = part==='leaf'?'L':part==='stem'?'S':part==='root'?'R':part==='fruit'?'F':'W';
+  const relevant = disease.tags.filter(t=> t[0]===letter || t[0]==='W');
+  const score = relevant.filter(t=>checked.has(t)).length;
+  return { score, total: relevant.length };
+}
+
+function teaser(d){
+  const s = d.symptoms.split('. ')[0];
+  return s.length>110 ? s.slice(0,108)+'…' : s+'.';
+}
+
+/* ============================= RENDER: NAV ============================= */
+function renderNav(){
+  const tabs = [
+    ['diagnose','Diagnose'],
+    ['browse','Browse'],
+    ['saved','Saved'],
+    ['about','About'],
+  ];
+  document.getElementById('navTabs').innerHTML = tabs.map(([key,label])=>
+    `<button data-action="nav" data-view="${key}" ${state.view===key?'aria-current="page"':''}>${label}</button>`
+  ).join('');
+}
+
+/* ============================= RENDER: DIAGNOSE ============================= */
+function renderDiagnose(){
+  if(state.diag.step===1) return renderDiagStep1();
+  if(state.diag.step===2) return renderDiagStep2();
+  return renderDiagResults();
+}
+
+function renderDiagStep1(){
+  const cards = Object.keys(PART_META).map(key=>{
+    const m = PART_META[key];
+    return `<button class="part-card" data-action="pick-part" data-part="${key}">
+      ${icon(m.icon)}
+      <b>${m.label}</b>
+      <span>${m.desc}</span>
+    </button>`;
+  }).join('');
+  return `
+    <div class="view-head">
+      <h1>What's affected?</h1>
+      <p>Pick the plant part showing symptoms. We'll match what you're seeing against fungal, bacterial, viral, and nematode culprits — plus common insect pests, grouped by order.</p>
+    </div>
+    <div class="part-grid">${cards}</div>
+  `;
+}
+
+function renderDiagStep2(){
+  const part = state.diag.part;
+  const tags = tagsForPart(part);
+  const checked = state.diag.checked;
+  const items = tags.map(t=>`
+    <label class="symptom-item ${checked.has(t)?'checked':''}">
+      <input type="checkbox" data-action="toggle-symptom" data-tag="${t}" ${checked.has(t)?'checked':''}>
+      <span>${TAGS[t]}</span>
+    </label>`).join('');
+  return `
+    <button class="link-back" data-action="back-to-step1">${icon('back','icon icon-sm')} Change plant part</button>
+    <div class="view-head">
+      <h1>What do you observe on the ${PART_META[part].label.toLowerCase()}?</h1>
+      <p>Select everything that applies — the more you check, the sharper the match.</p>
+    </div>
+    <div class="symptom-grid">${items}</div>
+    <div class="sticky-cta">
+      <button class="btn" data-action="see-results">See likely diseases (${checked.size} selected)</button>
+    </div>
+  `;
+}
+
+function renderDiagResults(){
+  const part = state.diag.part;
+  const checked = state.diag.checked;
+  const candidates = ENTRIES.filter(d=>d.parts.includes(part));
+  const scored = candidates.map(d=>({ d, ...matchScore(d, part, checked) }))
+    .filter(x=>x.score>0)
+    .sort((a,b)=> b.score-a.score || a.d.name.localeCompare(b.d.name));
+
+  const header = `
+    <button class="link-back" data-action="back-to-step2">${icon('back','icon icon-sm')} Adjust symptoms</button>
+    <div class="view-head">
+      <h1>Likely matches</h1>
+      <p>Ranked by how many of the symptoms you selected line up with each disease's typical signs on the ${PART_META[part].label.toLowerCase()}.</p>
+    </div>`;
+
+  if(scored.length===0){
+    return header + `
+      <div class="empty-state">
+        ${icon('search','icon icon-lg')}
+        <h3>No strong match yet</h3>
+        <p>Try selecting a few more symptoms, or browse the full library for this plant part instead.</p>
+        <button class="btn ghost" data-action="nav" data-view="browse">Browse the library</button>
+      </div>`;
+  }
+
+  const rows = scored.slice(0,12).map((x,i)=>{
+    const dots = Array.from({length:x.total}).map((_,j)=>`<span class="dot ${j<x.score?'on':''}"></span>`).join('');
+    return `<button class="result-card" data-action="open-detail" data-id="${x.d.id}" data-from="diagnose">
+      <span class="result-rank">${i+1}</span>
+      <div class="illus-tile result-illus ${x.d.type}">${illustration(x.d,40)}</div>
+      <span class="result-main">
+        <h3>${x.d.name}</h3>
+        <span class="sci">${x.d.sci}</span>
+        <div class="match-row">
+          <span class="badge ${x.d.type}">${TYPE_META[x.d.type].label}</span>
+          <span class="dots">${dots}</span>
+          <span class="match-text">${x.score} of ${x.total} key symptoms</span>
+        </div>
+      </span>
+    </button>`;
+  }).join('');
+
+  return header + `<div class="result-list">${rows}</div>`;
+}
+
+/* ============================= RENDER: BROWSE ============================= */
+function filterDropdown(key, label, options){
+  const f = state.browse;
+  const selected = key==='type' ? f.types : key==='part' ? f.parts : f.crops;
+  const isOpen = f.openFilter === key;
+  const count = selected.size;
+  const optionsHtml = options.map(o=>`
+    <label class="filter-option">
+      <input type="checkbox" data-action="filter-check" data-key="${key}" data-value="${o.value}" ${selected.has(o.value)?'checked':''}>
+      <span>${o.label}</span>
+    </label>`).join('');
+  return `<div class="filter-dropdown">
+    <button class="filter-toggle ${count?'active':''}" data-action="toggle-filter" data-key="${key}" aria-expanded="${isOpen}">
+      ${label}${count?` (${count})`:''} ${icon('chevron','icon icon-sm')}
+    </button>
+    ${isOpen ? `<div class="filter-panel">
+      ${optionsHtml}
+      ${count ? `<button class="filter-clear" data-action="filter-clear-one" data-key="${key}">Clear ${label.toLowerCase()}</button>` : ''}
+    </div>` : ''}
+  </div>`;
+}
+
+function activeChips(f){
+  const chips = [];
+  f.types.forEach(v=>chips.push({key:'type', value:v, label:TYPE_META[v].label}));
+  f.parts.forEach(v=>chips.push({key:'part', value:v, label:PART_META[v].label}));
+  f.crops.forEach(v=>chips.push({key:'crop', value:v, label:v}));
+  return chips;
+}
+
+function renderBrowse(){
+  const f = state.browse;
+  const filtered = ENTRIES.filter(d=>{
+    if(f.types.size && !f.types.has(d.type)) return false;
+    if(f.parts.size && !d.parts.some(p=>f.parts.has(p))) return false;
+    if(f.crops.size && !d.crops.some(c=>f.crops.has(c))) return false;
+    if(f.search){
+      const q = f.search.toLowerCase();
+      const hay = (d.name+' '+d.sci+' '+d.crops.join(' ')+' '+d.symptoms).toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  const typeOptions = Object.keys(TYPE_META).map(t=>({value:t, label:TYPE_META[t].label}));
+  const partOptions = Object.keys(PART_META).map(p=>({value:p, label:PART_META[p].label}));
+  const cropOptions = ALL_CROPS.map(c=>({value:c, label:c}));
+
+  const chips = activeChips(f);
+  const cards = filtered.map(cardHtml).join('');
+
+  return `
+    <div class="view-head">
+      <h1>Browse the field guide</h1>
+      <p>${DISEASES.length} diseases across fungal, bacterial, viral, and nematode pathogens, plus ${INSECTS.length} insect pest orders. Tick as many pathogens, plant parts, or crops as you like — they combine to narrow the list.</p>
+    </div>
+    <div class="filter-bar">
+      <input class="search-input" type="search" placeholder="Search by name, crop, or symptom…" value="${f.search.replace(/"/g,'&quot;')}" data-action="search-input">
+      ${filterDropdown('type', 'Pathogen / pest', typeOptions)}
+      ${filterDropdown('part', 'Plant part', partOptions)}
+      ${filterDropdown('crop', 'Crop', cropOptions)}
+    </div>
+    ${chips.length ? `<div class="active-chips">
+      ${chips.map(c=>`<button class="filter-chip" data-action="filter-remove" data-key="${c.key}" data-value="${c.value}">${c.label} ✕</button>`).join('')}
+      <button class="filter-clear-all" data-action="filter-clear-all">Clear all</button>
+    </div>` : ''}
+    <p class="result-count">${filtered.length} ${filtered.length===1?'disease':'diseases'} match${filtered.length===1?'es':''}</p>
+    ${filtered.length ? `<div class="card-grid">${cards}</div>` : emptyBrowse()}
+  `;
+}
+
+function emptyBrowse(){
+  return `<div class="empty-state">
+    ${icon('search','icon icon-lg')}
+    <h3>Nothing matches those filters</h3>
+    <p>Try clearing a filter or searching a different term.</p>
+  </div>`;
+}
+
+function cardHtml(d){
+  const partsIcons = d.parts.map(p=>icon(PART_META[p].icon,'icon')).join('');
+  return `<button class="disease-card" data-action="open-detail" data-id="${d.id}" data-from="browse">
+    <div class="illus-tile card-illus ${d.type}">
+      ${illustration(d,96)}
+      <span class="illus-badge">${icon(TYPE_META[d.type].icon,'icon icon-sm')}</span>
+    </div>
+    <div class="top-row">
+      <div>
+        <h3>${d.name}</h3>
+        <span class="sci">${d.sci}</span>
+      </div>
+      <span class="badge ${d.type}">${TYPE_META[d.type].label}</span>
+    </div>
+    <p class="teaser">${teaser(d)}</p>
+    <div class="parts-row">${partsIcons}</div>
+  </button>`;
+}
+
+/* ============================= RENDER: SAVED ============================= */
+function renderSaved(){
+  const list = ENTRIES.filter(d=>state.saved.has(d.id));
+  return `
+    <div class="view-head">
+      <h1>Saved diseases</h1>
+      <p>Diseases you've bookmarked for quick reference. Saved on this device only.</p>
+    </div>
+    ${list.length ? `<div class="card-grid">${list.map(cardHtml).join('')}</div>` : `
+    <div class="empty-state">
+      ${icon('star','icon icon-lg')}
+      <h3>Nothing saved yet</h3>
+      <p>Open any disease and tap "Save" to keep it here for quick reference in the field.</p>
+      <button class="btn ghost" data-action="nav" data-view="browse">Browse the library</button>
+    </div>`}
+  `;
+}
+
+/* ============================= RENDER: DETAIL ============================= */
+function renderDetail(){
+  const d = diseaseById(state.detailId);
+  if(!d) return renderBrowse();
+  const isSaved = state.saved.has(d.id);
+  const partsRow = d.parts.map(p=>`<span class="item">${icon(PART_META[p].icon,'icon')} ${PART_META[p].label}</span>`).join('');
+  const cropsRow = d.crops.map(c=>`<span class="chip">${c}</span>`).join('');
+
+  const mgmtBlock = (title, iconName, items)=> `
+    <div class="mgmt-card">
+      <h3>${icon(iconName)} ${title}</h3>
+      <ul>${(items||[]).map(i=>`<li>${i}</li>`).join('')}</ul>
+    </div>`;
+
+  return `
+    <button class="link-back" data-action="back-from-detail">${icon('back','icon icon-sm')} Back</button>
+    <div class="detail-head">
+      <div class="illus-tile detail-illus ${d.type}">
+        ${illustration(d,150)}
+        <span class="illus-badge">${icon(TYPE_META[d.type].icon,'icon icon-sm')}</span>
+      </div>
+      <div class="top-row">
+        <div>
+          <span class="badge ${d.type}">${TYPE_META[d.type].label}</span>
+          <h1>${d.name}</h1>
+          <span class="sci">${d.sci}</span>
+        </div>
+        <button class="save-btn ${isSaved?'active':''}" data-action="toggle-save" data-id="${d.id}">
+          ${icon('star','icon icon-sm')} ${isSaved?'Saved':'Save'}
+        </button>
+      </div>
+      <div class="chip-row">${cropsRow}</div>
+      <div class="parts-legend">${partsRow}</div>
+    </div>
+
+    <section class="detail-section">
+      <h2>Symptoms</h2>
+      <p>${d.symptoms}</p>
+    </section>
+
+    <section class="detail-section">
+      <h2>Favorable conditions &amp; spread</h2>
+      <p>${d.conditions}</p>
+    </section>
+
+    <section class="detail-section">
+      <h2>Management</h2>
+      <div class="mgmt-grid">
+        ${mgmtBlock('Cultural','hand', d.mgmt.cultural)}
+        ${mgmtBlock('Biological','bug', d.mgmt.biological)}
+        ${mgmtBlock('Plant-based extracts','leaf', d.mgmt.plantExtract)}
+        ${mgmtBlock('Chemical','flask', d.mgmt.chemical)}
+        ${mgmtBlock('Resistant varieties','seed', d.mgmt.resistant)}
+      </div>
+      <p class="note">Confirm the diagnosis and check current product registrations with your local agricultural extension service before applying any chemical treatment. Plant-based extracts are traditional and organic practices with variable, less standardized efficacy evidence than registered products — trial on a small area first.</p>
+    </section>
+  `;
+}
+
+/* ============================= RENDER: ABOUT ============================= */
+const CREATOR_PHOTO = `data:image/jpeg;base64,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`;
+
+function renderProfile(){
+  const chips = arr => `<div class="chip-row">${arr.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`;
+  const item = (title, meta, bullets) => `<div class="tl-item"><b>${title}</b><span class="tl-meta">${meta}</span>${bullets && bullets.length ? `<ul>${bullets.map(b=>`<li>${b}</li>`).join('')}</ul>` : ''}</div>`;
+  return `
+  <section class="profile">
+    <div class="profile-head">
+      <img class="profile-photo" src="${CREATOR_PHOTO}" alt="Portrait of Olanrewaju Olasheni Rilwan">
+      <div>
+        <h2 class="profile-name">Olanrewaju Olasheni Rilwan</h2>
+        <p class="profile-role">Lecturer, Department of Crop Protection<br>College of Agriculture and Environmental Science, Kaduna State University, Nigeria</p>
+        <a class="profile-mail" href="mailto:olanrewaju.rilwan@kasu.edu.ng">olanrewaju.rilwan@kasu.edu.ng</a>
+      </div>
+    </div>
+    <p class="profile-bio">Olanrewaju Olasheni Rilwan is a crop protection lecturer at Kaduna State University, trained in plant pathology. He teaches Bacteriology, Pest and Disease Control in Organic Agriculture, and Introduction to Pest and Disease Management, and supervises undergraduate research in crop protection. His own work centres on plant disease diagnosis and management, especially Fusarium wilt of tomato, and combines molecular tools, from real-time PCR to bioinformatics, with field and greenhouse experience. Before moving into academia he spent six years in banking operations at Standard Chartered Bank Nigeria (2011–2017).</p>
+
+    <h3>Research interests</h3>
+    ${chips([`Plant biotechnology`,`Molecular host-pathogen interactions`,`Effector proteins and immune receptors`,`Plant disease diagnosis and management`])}
+
+    <h3>Publications and scholarly activity</h3>
+    <div class="tl">
+      ${item(`Diagnosis of the incidence of Fusarium wilt on tomato in Jaba Local Government Area, Kaduna State`, `Olanrewaju, R. O. and Ayuba, S. (2026) · Journal of Plant Sciences and Crop Protection, Vol. 9 · ISSN 2639-3336`)}
+      ${item(`Effect of application of titanium dioxide in the management of Fusarium wilt and fruit yield of some tomato accessions`, `Olanrewaju, R. O., et al. (2022) · Nigerian Journal of Horticultural Science, Vol. 26 (4) · ISSN 1118-2733`)}
+      ${item(`Conference presentation: Effect of titanium dioxide on Fusarium wilt control and fruit yield of tomato`, `47th Annual Conference of the Nigeria Society for Plant Protection (NSPP), Abeokuta · 2022`)}
+      ${item(`4th International Plant Genetics and Genomics Conference (IPGG 2026)`, `Online via Microsoft Teams`)}
+    </div>
+
+    <h3>Research experience and mentorship</h3>
+    <div class="tl">
+      ${item(`M.Agric research`, `FUNAAB`, [`Investigated the efficacy of titanium dioxide against Fusarium oxysporum f. sp. lycopersici incidence and severity across tomato accessions, evaluating growth indices and fruit yield`])}
+      ${item(`B.Tech research`, `FUT Minna`, [`Evaluated the insecticidal and antiovipositional effects of Eucalyptus globulus and Azadirachta indica (neem) powder against Sitophilus zeamais in stored maize (Zea mays)`])}
+      ${item(`Undergraduate mentorship`, `Kaduna State University · 2025`, [
+        `Diagnosis of the incidence of Fusarium wilt on tomato in Jaba Local Government Area, Kaduna State`,
+        `Prevalence of Fusarium wilt on tomato in Chikun Local Government Area, Kaduna State`,
+        `Incidence and severity of Fusarium wilt on tomato in Kaura Local Government Area, Kaduna State`
+      ])}
+    </div>
+
+    <h3>Technical skills and training</h3>
+    <div class="skill-label">Laboratory and technical</div>
+    ${chips([`DNA/RNA extraction and quantification`,`Real-time PCR and bioinformatics`,`Marker-assisted selection (MAS)`,`Molecular diagnostic techniques`,`Next-generation sequencing (NGS)`,`Python programming`,`Microbial analyses of food and water`])}
+    <div class="skill-label">Field and software</div>
+    ${chips([`Pathogenicity testing (Xanthomonas, Magnaporthe)`,`Morphological identification of Fusarium wilt`,`Field and greenhouse experimentation`,`Statistica (data management and analysis)`,`Microsoft Office Suite`])}
+    <div class="skill-label">Training</div>
+    <div class="tl">
+      ${item(`Bioinformatics Course 201`, `Genomac Institute Inc., USA · 2024`)}
+      ${item(`Learning SQL Programming`, `LinkedIn Learning · 2022`)}
+      ${item(`Hybrid Training Workshop on Molecular Biology and Bioinformatics`, `Biotechnology Centre, FUNAAB · 2021`)}
+    </div>
+
+  </section>`;
+}
+
+function renderAbout(){
+  const legend = Object.keys(TYPE_META).map(t=>
+    `<span class="badge ${t}">${icon(TYPE_META[t].icon,'icon icon-sm')} ${TYPE_META[t].label}</span>`).join('');
+  return `
+    <div class="view-head">
+      <h1>About Crop Clinic</h1>
+    </div>
+    <div class="about-copy">
+      <p>Crop Clinic is a field-reference guide to common fungal, bacterial, viral, and nematode diseases of food crops and vegetables, plus common insect pests grouped by taxonomic order. Use the Diagnose tool to narrow down likely culprits from symptoms you observe on a leaf, stem, root, fruit, or across the whole plant — or browse the full library by crop, plant part, or pathogen/pest type.</p>
+      <h2>Pathogen &amp; pest types</h2>
+      <div class="legend-row">${legend}</div>
+      <p>This tool is an educational reference, not a substitute for laboratory diagnosis. Many diseases and pest damage patterns share overlapping symptoms, and accurate identification often requires lab testing or an in-person inspection.</p>
+      <p>Before applying any chemical treatment, confirm the diagnosis and check current product registrations, rates, and pre-harvest intervals with your local agricultural extension service. Management practices here — including plant-based extracts — are general and widely documented, not tailored to your specific climate, cultivar, or local regulations.</p>
+    </div>
+    ${renderProfile()}
+  `;
+}
+
+/* ============================= MAIN RENDER ============================= */
+function render(){
+  renderNav();
+  const app = document.getElementById('app');
+  let html = '';
+  if(state.view==='diagnose') html = renderDiagnose();
+  else if(state.view==='browse') html = renderBrowse();
+  else if(state.view==='saved') html = renderSaved();
+  else if(state.view==='about') html = renderAbout();
+  else if(state.view==='detail') html = renderDetail();
+  app.innerHTML = html;
+  window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+}
+
+/* ============================= EVENTS ============================= */
+document.addEventListener('click', (e)=>{
+  let closedDropdown = false;
+  if(state.browse.openFilter && !e.target.closest('.filter-dropdown')){
+    state.browse.openFilter = null;
+    closedDropdown = true;
+  }
+  const btn = e.target.closest('[data-action]');
+  if(!btn){ if(closedDropdown) render(); return; }
+  const action = btn.dataset.action;
+
+  if(action==='nav'){
+    state.view = btn.dataset.view;
+    if(state.view==='diagnose'){ state.diag = { step:1, part:null, checked:new Set() }; }
+    render();
+  }
+  else if(action==='pick-part'){
+    state.diag.part = btn.dataset.part;
+    state.diag.step = 2;
+    state.diag.checked = new Set();
+    render();
+  }
+  else if(action==='back-to-step1'){
+    state.diag.step = 1; state.diag.part = null; state.diag.checked = new Set();
+    render();
+  }
+  else if(action==='back-to-step2'){
+    state.diag.step = 2;
+    render();
+  }
+  else if(action==='see-results'){
+    state.diag.step = 3;
+    render();
+  }
+  else if(action==='open-detail'){
+    state.detailId = btn.dataset.id;
+    state.detailFrom = btn.dataset.from || 'browse';
+    state.view = 'detail';
+    render();
+  }
+  else if(action==='back-from-detail'){
+    state.view = state.detailFrom==='diagnose' ? 'diagnose' : (state.detailFrom==='saved' ? 'saved' : 'browse');
+    if(state.view==='diagnose'){ state.diag.step = 3; }
+    render();
+  }
+  else if(action==='toggle-save'){
+    const id = btn.dataset.id;
+    if(state.saved.has(id)) state.saved.delete(id); else state.saved.add(id);
+    persistSaved();
+    render();
+  }
+  else if(action==='toggle-filter'){
+    const key = btn.dataset.key;
+    state.browse.openFilter = (state.browse.openFilter===key) ? null : key;
+    render();
+  }
+  else if(action==='filter-clear-one'){
+    const key = btn.dataset.key;
+    const setRef = key==='type' ? state.browse.types : key==='part' ? state.browse.parts : state.browse.crops;
+    setRef.clear();
+    render();
+  }
+  else if(action==='filter-remove'){
+    const key = btn.dataset.key;
+    const setRef = key==='type' ? state.browse.types : key==='part' ? state.browse.parts : state.browse.crops;
+    setRef.delete(btn.dataset.value);
+    render();
+  }
+  else if(action==='filter-clear-all'){
+    state.browse.types.clear(); state.browse.parts.clear(); state.browse.crops.clear();
+    render();
+  }
+  else if(action==='theme-toggle'){
+    /* handled by dedicated listener below */
+  }
+});
+
+document.addEventListener('change', (e)=>{
+  const el = e.target;
+  if(el.dataset.action==='toggle-symptom'){
+    const tag = el.dataset.tag;
+    if(el.checked) state.diag.checked.add(tag); else state.diag.checked.delete(tag);
+    render();
+  }
+  else if(el.dataset.action==='filter-check'){
+    const key = el.dataset.key;
+    const setRef = key==='type' ? state.browse.types : key==='part' ? state.browse.parts : state.browse.crops;
+    if(el.checked) setRef.add(el.dataset.value); else setRef.delete(el.dataset.value);
+    render();
+  }
+});
+
+document.addEventListener('input', (e)=>{
+  const el = e.target;
+  if(el.dataset.action==='search-input'){
+    state.browse.search = el.value;
+    render();
+    const input = document.querySelector('.search-input');
+    if(input){ input.focus(); input.selectionStart = input.selectionEnd = input.value.length; }
+  }
+});
+
+document.getElementById('themeToggle').addEventListener('click', ()=>{
+  const current = document.documentElement.getAttribute('data-theme');
+  const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  let next;
+  if(!current) next = systemDark ? 'light' : 'dark';
+  else if(current==='dark') next = 'light';
+  else next = 'dark';
+  applyTheme(next);
+  try{ localStorage.setItem('cropclinic_theme', next); }catch(e){}
+});
+
+render();
+</script>
+</body>
+</html>
